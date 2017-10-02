@@ -1,0 +1,47 @@
+INTERLIS 2.3;
+
+MODEL SO_MOpublic_20171003 (de)
+AT "http://www.geo.so.ch/models/AGI"
+VERSION "2017-10-03"  =
+  IMPORTS GeometryCHLV95_V1,Units,CHAdminCodes_V1;
+
+  TOPIC MOpublic =
+    OID AS INTERLIS.UUIDOID;
+
+    DOMAIN
+
+      Genauigkeit = 0.0 .. 700.0 [Units.cm];
+
+      Hoehe = -200.000 .. 1600.000 [INTERLIS.M];
+
+      /** In Grad. Einheit, Drehsinn und Nullpunkt an GDI-Software angepasst.
+       */
+      Orientierung = -180.00 .. 180.00 [Units.Angle_Degree];
+
+    CLASS Bodenbedeckung =
+      /** Bodenbedeckungsart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 25;
+      /** Bodenbedeckungsart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Eidgenössischer Gebäudeidentifikator
+       */
+      EGID : 0 .. 999999999;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+    END Bodenbedeckung;
+
+  END MOpublic;
+
+END SO_MOpublic_20171003.

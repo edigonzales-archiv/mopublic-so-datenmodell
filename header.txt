@@ -1,0 +1,18 @@
+!!============================================================================== 
+!!@ File = "SO_Nutzungsplanung_Publikation_20170821.ili"; 
+!!@ Title = "Nutzungsplanung Publikation"; 
+!!@ shortDescription = "Publikationsmodell für die Nutzungsplanung des Kantons 
+!!@ Solothurn";  
+!!@ Issuer = "http://arp.so.ch"; 
+!!@ technicalContact = "http://agi.so.ch"; 
+!!@ furtherInformation = "";
+!!  Publikationsmodell;
+!!  Compiler-Version = "4.7.3-20170524"; 
+!!------------------------------------------------------------------------------ 
+!! Version    | wer | Änderung 
+!!------------------------------------------------------------------------------ 
+!! 2017-07-21 | al  | Erstfassung
+!! 2017-08-21 | al  | Anpassung nach Review sz
+!! 2017-09-29 | sz  | Formelle Korrekturen
+!!============================================================================== 
+
