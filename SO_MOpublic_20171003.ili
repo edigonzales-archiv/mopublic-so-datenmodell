@@ -42,6 +42,54 @@ VERSION "2017-10-03"  =
       Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
     END Bodenbedeckung;
 
+    CLASS Bodenbedeckung_proj =
+      /** Bodenbedeckungsart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 25;
+      /** Bodenbedeckungsart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Eidgenössischer Gebäudeidentifikator
+       */
+      EGID : 0 .. 999999999;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+    END Bodenbedeckung_proj;
+
+    CLASS Einzelobjekte_Flaechen =
+      /** Einzelobjektart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 41;
+      /** Einzelobjektart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*20;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Eidgenössischer Gebäudeidentifikator
+       */
+      EGID : 0 .. 999999999;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+    END Einzelobjekte_Flaechen;
+
   END MOpublic;
 
 END SO_MOpublic_20171003.
