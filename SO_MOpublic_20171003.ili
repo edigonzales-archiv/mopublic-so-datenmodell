@@ -36,7 +36,7 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch NF-Geometer
        */
-      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      Nachfuehrung : INTERLIS.XMLDate;
       /** Geometrie
        */
       Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
@@ -60,19 +60,19 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch NF-Geometer
        */
-      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      Nachfuehrung : INTERLIS.XMLDate;
       /** Geometrie
        */
       Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
     END Bodenbedeckung_proj;
 
-    CLASS Einzelobjekte_Flaechen =
+    CLASS Einzelobjekt_Flaeche =
       /** Einzelobjektart (Integer-Repräsentation)
        */
       Art : MANDATORY 0 .. 41;
       /** Einzelobjektart (Text-Repräsentation)
        */
-      Art_txt : MANDATORY TEXT*20;
+      Art_txt : MANDATORY TEXT*100;
       /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
        */
       BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
@@ -84,11 +84,56 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch NF-Geometer
        */
-      Nachfuehrung : MANDATORY INTERLIS.XMLDate;
+      Nachfuehrung : INTERLIS.XMLDate;
       /** Geometrie
        */
       Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
-    END Einzelobjekte_Flaechen;
+    END Einzelobjekt_Flaeche;
+
+    CLASS Einzelobjekt_Linie =
+      /** Einzelobjektart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 41;
+      /** Einzelobjektart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Line;
+    END Einzelobjekt_Linie;
+
+    CLASS Einzelobjekte_Punkt =
+      /** Einzelobjektart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 41;
+      /** Einzelobjektart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Orientierung des Symbols
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+    END Einzelobjekte_Punkt;
 
   END MOpublic;
 
