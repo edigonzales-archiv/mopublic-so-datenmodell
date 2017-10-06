@@ -111,6 +111,114 @@ VERSION "2017-10-03"  =
       Geometrie : MANDATORY GeometryCHLV95_V1.Line;
     END Einzelobjekt_Linie;
 
+    CLASS Flurname =
+      /** Flurname
+       */
+      Flurname : MANDATORY TEXT*100;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Positionierungspunkt fuer Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAlignment : MANDATORY INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Flurname;
+
+    CLASS Gemeindegrenze =
+      /** Name der Gemeinde
+       */
+      Gemeindename : MANDATORY TEXT*100;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLTime;
+    END Gemeindegrenze;
+
+    CLASS Gemeindegrenze_proj =
+      /** Name der Gemeinde
+       */
+      Gemeindename : MANDATORY TEXT*100;
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Line;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Gemeindegrenze_proj;
+
+    CLASS Rohrleitung =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Line;
+      /** Transportmedium (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 2;
+      /** Transportmedium (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*40;
+      /** Betreiber
+       */
+      Betreiber : MANDATORY TEXT*40;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Rohrleitung;
+
+    CLASS Strassenachse =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Line;
+      /** Strassenname
+       */
+      Strassenname : TEXT*100;
+      /** Ordnung des Strassenstückes
+       */
+      Ordnung : MANDATORY 1 .. 9999;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Strassenachse;
+
     CLASS Einzelobjekte_Punkt =
       /** Einzelobjektart (Integer-Repräsentation)
        */
@@ -134,6 +242,399 @@ VERSION "2017-10-03"  =
        */
       Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
     END Einzelobjekte_Punkt;
+
+    CLASS Fixpunkt =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Fixpunkttyp (Integer-Repräsentation)
+       */
+      Typ : MANDATORY 0 .. 5;
+      /** Fixpunkttyp (Text-Repräsentation)
+       */
+      Typ_txt : MANDATORY TEXT*20;
+      /** Nummerierungsbereichidentifikator
+       */
+      NBIdent : MANDATORY TEXT*12;
+      /** Bezeichnung des Fixpunktes
+       */
+      Nummer : TEXT*12;
+      /** Höhe
+       */
+      Hoehe : Hoehe;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Lagegenauigkeit
+       */
+      Lagegenauigkeit : MANDATORY Genauigkeit;
+      /** Höhengenauigkeit
+       */
+      Hoehengenauigkeit : Genauigkeit;
+      /** Punktzeichen (Integer-Repräsentation)
+       */
+      Punktzeichen : MANDATORY 0 .. 8;
+      /** Punktzeichen (Text-Repräsentation)
+       */
+      Punktzeichen_txt : MANDATORY TEXT*20;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : Orientierung;
+      /** HAlignment
+       */
+      HAli : INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Fixpunkt;
+
+    CLASS Gebaeudeadresse =
+      /** Lage des Gebäudeeingangs
+       */
+      Lage : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Name der Strasse
+       */
+      Strassenname : TEXT*100;
+      /** Hausnummer
+       */
+      Hausnummer : TEXT*20;
+      EGID : 0 .. 999999999;
+      EDID : 0 .. 99;
+      /** Vierstellige Postleitzahl
+       */
+      PLZ : MANDATORY 0 .. 9999;
+      /** Ortschaftsname
+       */
+      Ortschaft : MANDATORY TEXT*100;
+      /** Status des Gebäudeinganges
+       */
+      Status : TEXT*20;
+      /** Ist Adresse offiziell?
+       */
+      ist_offizielle_bezeichnung : BOOLEAN;
+      /** Relative Lage des Gebäudeeinganges
+       */
+      Hoehenlage : -99 .. 99;
+      /** Name des Gebäudes
+       */
+      Gebaeudename : TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Positionierungspunkt für Beschriftung der Hausnummer
+       */
+      Pos : GeometryCHLV95_V1.Coord2;
+      /** Orientierung des Beschriftungstextes
+       */
+      Orientierung : Orientierung;
+      /** HAlignment
+       */
+      HAli : INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Gebaeudeadresse;
+
+    CLASS Gelaendename =
+      /** Gelaendename
+       */
+      Gelaendename : MANDATORY TEXT*100;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLTime;
+    END Gelaendename;
+
+    CLASS Grenzpunkt =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Lagegenauigkeit
+       */
+      Lagegenauigkeit : MANDATORY Genauigkeit;
+      /** Lagezuverlässigkeit
+       */
+      Lagezuverlaessigkeit : MANDATORY BOOLEAN;
+      /** Art des Punktzeichens (Integer-Repräsentation)
+       */
+      Punktzeichen : MANDATORY 0 .. 7;
+      /** Art des Punktzeichens (Text-Repräsentation)
+       */
+      Punktzeichen_txt : MANDATORY TEXT*20;
+      /** Symbolorientierung
+       */
+      Orientierung : GeometryCHLV95_V1.Orientation;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Grenzpunkt;
+
+    CLASS Grundstueck =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Surface;
+      /** Nummerierungsbereichidentifikator
+       */
+      NBIdent : MANDATORY TEXT*12;
+      /** Grundbuchnummer
+       */
+      Nummer : MANDATORY TEXT*15;
+      /** Grundstücksart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 2;
+      /** Grundstücksart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*20;
+      /** Fläche des Grundstückes in m2
+       */
+      Flaechenmass : MANDATORY 0 .. 9999999999;
+      /** Eidgenössischer Grundstücksidentifikator
+       */
+      EGRID : TEXT*14;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Grundstueck;
+
+    CLASS Grundstueck_proj =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+      /** Nummerierungsbereichidentifikator
+       */
+      NBIdent : MANDATORY TEXT*12;
+      /** Grundbuchnummer
+       */
+      Nummer : MANDATORY TEXT*15;
+      /** Grundstücksart (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 2;
+      /** Grundstücksart (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*20;
+      /** Fläche des Grundstückes in m2
+       */
+      Flaechenmass : MANDATORY 0 .. 9999999999;
+      /** Eidgenössischer Grundstücksidentifikator
+       */
+      EGRID : TEXT*14;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : MANDATORY INTERLIS.XMLTime;
+    END Grundstueck_proj;
+
+    CLASS Hoheitsgrenzpunkt =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Identifikationsname
+       */
+      Nummer : TEXT*20;
+      /** Punktzeichen (Integer-Repräsentation)
+       */
+      Punktzeichen : MANDATORY 0 .. 7;
+      /** Punktzeichen (Text-Repräsentation)
+       */
+      Punktzeichen_txt : MANDATORY TEXT*20;
+      /** Schöner Stein?
+       */
+      schoener_Stein : MANDATORY BOOLEAN;
+      /** Lagegenauigkeit
+       */
+      Lagegenauigkeit : MANDATORY Genauigkeit;
+      /** Lagezuverlässigkeit
+       */
+      Lagezuverlaessigkeit : MANDATORY BOOLEAN;
+      /** Textorientierung
+       */
+      Orientierung : Orientierung;
+      /** HAlignment
+       */
+      HAli : INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : INTERLIS.VALIGNMENT;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Hoheitsgrenzpunkt;
+
+    CLASS Objektname_Pos =
+      /** Name des Objektes
+       */
+      Objektname : MANDATORY TEXT*100;
+      /** Position
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** Halignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** Valignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Art des Objektnamens, aus Art BB/EO. (Integer-Repräsentation)
+       */
+      Art : MANDATORY 0 .. 41;
+      /** Art des Objektnamens, aus Art BB/EO. (Text-Repräsentation)
+       */
+      Art_txt : MANDATORY TEXT*100;
+      /** Herkunft des Objektnames
+       */
+      Herkunft : MANDATORY (
+        EO_Linie,
+        EO_Flaeche,
+        BB
+      );
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Objektname_Pos;
+
+    CLASS Ortsname =
+      /** Geometrie
+       */
+      Geometrie : MANDATORY GeometryCHLV95_V1.SurfaceWithOverlaps2mm;
+      /** Ortsname
+       */
+      Ortsname : MANDATORY TEXT*40;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Ortsname;
+
+    CLASS Strassenname_Pos =
+      /** Strassenname
+       */
+      Strassenname : MANDATORY TEXT*100;
+      /** Positionierungspunkt für Beschriftung
+       */
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      /** Textorientierung
+       */
+      Orientierung : MANDATORY Orientierung;
+      /** HAlignment
+       */
+      HAli : MANDATORY INTERLIS.HALIGNMENT;
+      /** VAlignment
+       */
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
+      /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt
+       */
+      BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
+      /** Importdatum
+       */
+      Importdatum : MANDATORY INTERLIS.XMLDateTime;
+      /** Datum der Nachführung durch NF-Geometer
+       */
+      Nachfuehrung : INTERLIS.XMLDate;
+    END Strassenname_Pos;
 
   END MOpublic;
 
