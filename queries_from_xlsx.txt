@@ -1,0 +1,574 @@
+Query
+select  bodenbedeckung_boflaeche.tid as ogc_fid, 
+       bodenbedeckung_boflaeche.art as typ, 
+              case when split_part(bodenbedeckung_boflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_boflaeche.art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(bodenbedeckung_boflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_boflaeche.art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(bodenbedeckung_boflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_boflaeche.art_txt,'.'),1))
+       end as typ_text,
+       bodenbedeckung_boflaeche.gem_bfs,
+       gwr_egid as egid, 
+       now() as importdatum,
+       bodenbedeckung_bbnachfuehrung.gueltigereintrag as nachfuehrung,
+       bodenbedeckung_boflaeche.geometrie
+from av_avdpool_ng.bodenbedeckung_boflaeche
+left join av_avdpool_ng.bodenbedeckung_gebaeudenummer
+on bodenbedeckung_gebaeudenummer.gebaeudenummer_von=bodenbedeckung_boflaeche.tid
+left join av_avdpool_ng.bodenbedeckung_bbnachfuehrung
+on  bodenbedeckung_bbnachfuehrung.tid=bodenbedeckung_boflaeche.entstehung
+
+select bodenbedeckung_projboflaeche.tid as ogc_fid,
+       bodenbedeckung_projboflaeche.geometrie, 
+       bodenbedeckung_projboflaeche.art as typ, 
+              case when split_part(bodenbedeckung_projboflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_projboflaeche.art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(bodenbedeckung_projboflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_projboflaeche.art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(bodenbedeckung_projboflaeche.art_txt,'.',array_upper(string_to_array(bodenbedeckung_projboflaeche.art_txt,'.'),1))
+       end as typ_text,
+       bodenbedeckung_projboflaeche.gem_bfs,
+       gwr_egid as egid, 
+       now() as importdatum,
+       bodenbedeckung_bbnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.bodenbedeckung_projboflaeche
+left join av_avdpool_ng.bodenbedeckung_projgebaeudenummer
+on bodenbedeckung_projgebaeudenummer.projgebaeudenummer_von=bodenbedeckung_projboflaeche.tid
+left join av_avdpool_ng.bodenbedeckung_bbnachfuehrung
+on  bodenbedeckung_bbnachfuehrung.tid=bodenbedeckung_projboflaeche.entstehung
+
+select einzelobjekte_einzelobjekt.tid as ogc_fid,
+       einzelobjekte_flaechenelement.geometrie, 
+       einzelobjekte_einzelobjekt.art as typ,
+       case when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1)) 
+        end as typ_text,
+       einzelobjekte_flaechenelement.gem_bfs,
+       einzelobjekte_objektnummer.gwr_egid as egid,
+       now() as importdatum,
+       einzelobjekte_eonachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.einzelobjekte_flaechenelement
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_flaechenelement.flaechenelement_von
+left join av_avdpool_ng.einzelobjekte_objektnummer
+on einzelobjekte_objektnummer.objektnummer_von=einzelobjekte_einzelobjekt.tid
+left join av_avdpool_ng.einzelobjekte_eonachfuehrung
+on einzelobjekte_eonachfuehrung.tid=einzelobjekte_einzelobjekt.entstehung
+
+select einzelobjekte_einzelobjekt.tid as ogc_fid,
+       einzelobjekte_linienelement.geometrie, 
+       einzelobjekte_einzelobjekt.art as typ,
+       case when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1)) 
+        end as typ_text,
+       einzelobjekte_linienelement.gem_bfs,
+       now() as importdatum,
+       einzelobjekte_eonachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.einzelobjekte_linienelement
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_linienelement.linienelement_von
+left join av_avdpool_ng.einzelobjekte_eonachfuehrung
+on einzelobjekte_eonachfuehrung.tid=einzelobjekte_einzelobjekt.entstehung
+
+select einzelobjekte_einzelobjekt.tid as ogc_fid, 
+       einzelobjekte_punktelement.geometrie, 
+       case when einzelobjekte_punktelement.ori<=200 THEN einzelobjekte_punktelement.ori/400*360
+            else -360+einzelobjekte_punktelement.ori/400*360
+       end as symbolorientierung,
+       einzelobjekte_einzelobjekt.art as typ,
+       case when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(einzelobjekte_einzelobjekt.art_txt,'.',array_upper(string_to_array(einzelobjekte_einzelobjekt.art_txt,'.'),1)) 
+        end as typ_text,
+       einzelobjekte_punktelement.gem_bfs,
+       now() as importdatum,
+       einzelobjekte_eonachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.einzelobjekte_punktelement
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_punktelement.punktelement_von
+left join av_avdpool_ng.einzelobjekte_eonachfuehrung
+on einzelobjekte_eonachfuehrung.tid=einzelobjekte_einzelobjekt.entstehung
+
+select objektname_von as pos_text_von, name as objektname, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, 
+       hali, hali_txt as hali_text, vali, vali_txt as vali_text, art as typ
+       ,case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+       'eo_Flaeche' as herkunft, 'realisiert' as status, einzelobjekte_objektnamepos.gem_bfs, now() as importdatum, einzelobjekte_objektnamepos.lieferdatum as nachfuehrung
+from av_avdpool_ng.einzelobjekte_objektnamepos
+left join av_avdpool_ng.einzelobjekte_objektname
+on einzelobjekte_objektname.tid=einzelobjekte_objektnamepos.objektnamepos_von
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_objektname.objektname_von
+inner join av_avdpool_ng.einzelobjekte_flaechenelement
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_flaechenelement.flaechenelement_von
+union
+select objektname_von as pos_text_von, name as objektname, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, 
+       hali, hali_txt as hali_text, vali, vali_txt as vali_text, art as typ
+       ,case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+       'eo_Linie' as herkunft, 'realisiert' as status, einzelobjekte_objektnamepos.gem_bfs, now() as importdatum, einzelobjekte_objektnamepos.lieferdatum as nachfuehrung
+from av_avdpool_ng.einzelobjekte_objektnamepos
+left join av_avdpool_ng.einzelobjekte_objektname
+on einzelobjekte_objektname.tid=einzelobjekte_objektnamepos.objektnamepos_von
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_objektname.objektname_von
+inner join av_avdpool_ng.einzelobjekte_linienelement
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_linienelement.linienelement_von
+union
+select objektname_von as pos_text_von, name as objektname, pos, 
+       case when einzelobjekte_objektnamepos.ori<=300 THEN 90-einzelobjekte_objektnamepos.ori/400*360
+       else 360-einzelobjekte_objektnamepos.ori/400*360+90
+       end as orientierung, 
+       hali, hali_txt as hali_text, vali, vali_txt as vali_text, art as typ
+       ,case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+       'eo_Punkt' as herkunft, 'realisiert' as status, einzelobjekte_objektnamepos.gem_bfs, now() as importdatum, einzelobjekte_objektnamepos.lieferdatum as nachfuehrung
+from av_avdpool_ng.einzelobjekte_objektnamepos
+left join av_avdpool_ng.einzelobjekte_objektname
+on einzelobjekte_objektname.tid=einzelobjekte_objektnamepos.objektnamepos_von
+left join av_avdpool_ng.einzelobjekte_einzelobjekt
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_objektname.objektname_von
+inner join av_avdpool_ng.einzelobjekte_punktelement
+on einzelobjekte_einzelobjekt.tid=einzelobjekte_punktelement.punktelement_von
+union
+select gebaeudenummer_von, nummer, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, hali, hali_txt, vali, vali_txt, 
+       art, case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+        'bb' as herkunft, 'realisiert' as status,bodenbedeckung_gebaeudenummerpos.gem_bfs, now() as importdatum, bodenbedeckung_gebaeudenummerpos.lieferdatum as nachfuehrung     
+from av_avdpool_ng.bodenbedeckung_gebaeudenummerpos
+left join av_avdpool_ng.bodenbedeckung_gebaeudenummer
+on bodenbedeckung_gebaeudenummer.tid=bodenbedeckung_gebaeudenummerpos.gebaeudenummerpos_von
+left join av_avdpool_ng.bodenbedeckung_boflaeche
+on bodenbedeckung_gebaeudenummer.gebaeudenummer_von=bodenbedeckung_boflaeche.tid
+union
+select objektname_von, name, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, hali, hali_txt, vali, vali_txt, 
+       art, case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+        'bb' as herkunft, 'realisiert' as status,bodenbedeckung_objektnamepos.gem_bfs, now() as importdatum, bodenbedeckung_objektnamepos.lieferdatum as nachfuehrung      
+from av_avdpool_ng.bodenbedeckung_objektnamepos
+left join av_avdpool_ng.bodenbedeckung_objektname
+on bodenbedeckung_objektname.tid=bodenbedeckung_objektnamepos.objektnamepos_von
+left join av_avdpool_ng.bodenbedeckung_boflaeche
+on bodenbedeckung_objektname.objektname_von=bodenbedeckung_boflaeche.tid
+union
+select projgebaeudenummer_von, nummer, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, hali, hali_txt, vali, vali_txt, 
+       art, 
+       case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+        'bb' as herkunft, 'projektiert' as status,bodenbedeckung_projgebaeudenummerpos.gem_bfs, now() as importdatum, bodenbedeckung_projgebaeudenummerpos.lieferdatum as nachfuehrung       
+from av_avdpool_ng.bodenbedeckung_projgebaeudenummerpos
+left join av_avdpool_ng.bodenbedeckung_projgebaeudenummer
+on bodenbedeckung_projgebaeudenummer.tid=bodenbedeckung_projgebaeudenummerpos.projgebaeudenummerpos_von
+left join av_avdpool_ng.bodenbedeckung_projboflaeche
+on bodenbedeckung_projgebaeudenummer.projgebaeudenummer_von=bodenbedeckung_projboflaeche.tid
+union
+select projobjektname_von, name, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, hali, hali_txt, vali, vali_txt, 
+       art,case when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='fliessendes' THEN 'fliessendes Gewaesser'
+            when split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1))='stehendes' THEN 'stehendes Gewaesser'
+            else split_part(art_txt,'.',array_upper(string_to_array(art_txt,'.'),1)) 
+        end as typ_text,
+        'bb' as herkunft, 'projektiert' as status,bodenbedeckung_projobjektnamepos.gem_bfs, now() as importdatum, bodenbedeckung_projobjektnamepos.lieferdatum as nachfuehrung       
+from av_avdpool_ng.bodenbedeckung_projobjektnamepos
+left join av_avdpool_ng.bodenbedeckung_projobjektname
+on bodenbedeckung_projobjektname.tid=bodenbedeckung_projobjektnamepos.projobjektnamepos_von
+left join av_avdpool_ng.bodenbedeckung_projboflaeche
+on bodenbedeckung_projobjektname.projobjektname_von=bodenbedeckung_projboflaeche.tid
+
+select distinct on  (geometrie)
+       geometrie, name as flurname, nomenklatur_flurname.gem_bfs, pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, hali, hali_txt as hali_text, vali, vali_txt as vali_text, now() as importdatum, 
+       nomenklatur_nknachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.nomenklatur_flurname
+left join av_avdpool_ng.nomenklatur_flurnamepos
+on nomenklatur_flurnamepos.flurnamepos_von=nomenklatur_flurname.tid
+left join av_avdpool_ng.nomenklatur_nknachfuehrung
+on nomenklatur_nknachfuehrung.tid=nomenklatur_flurname.entstehung
+
+
+select lage, strassenname, hausnummer, egid, edid, plz, ortschaft,  ist_offizielle_bezeichnung,status, hoehenlage, gebaeudename, gem_bfs, now() as importdatum, nachfuehrung, pos, orientierung, hali, hali_text, vali, vali_text
+from (
+select *
+from (select gebaeudeadressen_gebnachfuehrung.gueltigereintrag as nachfuehrung,
+                gebaeudeadressen_gebaeudeeingang.lage, 
+                gebaeudeadressen_gebaeudeeingang.gwr_egid as egid, 
+                gebaeudeadressen_gebaeudeeingang.gwr_edid as edid, 
+                gebaeudeadressen_gebaeudeeingang.hausnummer, 
+                gebaeudeadressen_gebaeudeeingang.gem_bfs,
+                gebaeudeadressen_gebaeudeeingang.istoffiziellebezeichnung_txt as ist_offizielle_bezeichnung,
+                gebaeudeadressen_gebaeudeeingang.status_txt as status,
+                gebaeudeadressen_gebaeudeeingang.hoehenlage,
+                gebaeudeadressen_lokalisationsname.text as strassenname, 
+                gebaeudeadressen_hausnummerpos.pos,
+                case when gebaeudeadressen_hausnummerpos.ori<=300 THEN 90-gebaeudeadressen_hausnummerpos.ori/400*360
+                    else 360-gebaeudeadressen_hausnummerpos.ori/400*360+90
+                end as orientierung,
+                gebaeudeadressen_hausnummerpos.hali,
+                gebaeudeadressen_hausnummerpos.hali_txt as hali_text,
+                gebaeudeadressen_hausnummerpos.vali,
+                gebaeudeadressen_hausnummerpos.vali_txt as vali_text,
+                gebaeudeadressen_gebaeudename.text as gebaeudename
+        from av_avdpool_ng.gebaeudeadressen_gebaeudeeingang
+        left join av_avdpool_ng.gebaeudeadressen_lokalisation
+                on gebaeudeadressen_lokalisation.tid=gebaeudeadressen_gebaeudeeingang.gebaeudeeingang_von
+        left join av_avdpool_ng.gebaeudeadressen_lokalisationsname
+                on gebaeudeadressen_lokalisationsname.benannte=gebaeudeadressen_lokalisation.tid
+        left join av_avdpool_ng.gebaeudeadressen_hausnummerpos
+                on gebaeudeadressen_hausnummerpos.hausnummerpos_von=gebaeudeadressen_gebaeudeeingang.tid
+        left join av_avdpool_ng.gebaeudeadressen_gebaeudename
+                on gebaeudeadressen_gebaeudename.gebaeudename_von=gebaeudeadressen_gebaeudeeingang.tid
+        left join av_avdpool_ng.gebaeudeadressen_gebnachfuehrung
+                on gebaeudeadressen_gebnachfuehrung.tid=gebaeudeadressen_gebaeudeeingang.entstehung
+
+        UNION
+
+        select gebaeudeadressen_gebnachfuehrung.gueltigereintrag as nachfuehrung,
+                gebaeudeadressen_gebaeudeeingang.lage, 
+                gebaeudeadressen_gebaeudeeingang.gwr_egid as egid, 
+                gebaeudeadressen_gebaeudeeingang.gwr_edid as edid, 
+                gebaeudeadressen_gebaeudeeingang.hausnummer, 
+                gebaeudeadressen_gebaeudeeingang.gem_bfs,
+                gebaeudeadressen_gebaeudeeingang.istoffiziellebezeichnung_txt as ist_offizielle_bezeichnung,
+                gebaeudeadressen_gebaeudeeingang.status_txt as status,
+                gebaeudeadressen_gebaeudeeingang.hoehenlage,
+                gebaeudeadressen_lokalisationsname.text as strassenname, 
+                gebaeudeadressen_gebaeudenamepos.pos,
+                case when gebaeudeadressen_gebaeudenamepos.ori<=300 THEN 90-gebaeudeadressen_gebaeudenamepos.ori/400*360
+                      else 360-gebaeudeadressen_gebaeudenamepos.ori/400*360+90
+                end as orientierung,
+                gebaeudeadressen_gebaeudenamepos.hali,
+                gebaeudeadressen_gebaeudenamepos.hali_txt as hali_text,
+                gebaeudeadressen_gebaeudenamepos.vali,
+                gebaeudeadressen_gebaeudenamepos.vali_txt as vali_text,
+                gebaeudeadressen_gebaeudename.text as gebaeudename
+        from av_avdpool_ng.gebaeudeadressen_gebaeudeeingang
+        left join av_avdpool_ng.gebaeudeadressen_lokalisation
+                on gebaeudeadressen_lokalisation.tid=gebaeudeadressen_gebaeudeeingang.gebaeudeeingang_von
+        left join av_avdpool_ng.gebaeudeadressen_lokalisationsname
+                on gebaeudeadressen_lokalisationsname.benannte=gebaeudeadressen_lokalisation.tid
+        right join av_avdpool_ng.gebaeudeadressen_gebaeudename
+                on gebaeudeadressen_gebaeudename.gebaeudename_von=gebaeudeadressen_gebaeudeeingang.tid
+        left join av_avdpool_ng.gebaeudeadressen_gebaeudenamepos
+                on gebaeudeadressen_gebaeudenamepos.gebaeudenamepos_von=gebaeudeadressen_gebaeudename.tid
+        left join av_avdpool_ng.gebaeudeadressen_gebnachfuehrung
+                on gebaeudeadressen_gebnachfuehrung.tid=gebaeudeadressen_gebaeudeeingang.entstehung) as gebaeudeeingang,
+
+        (select plzortschaft__ortschaftsname.text as ortschaft, plzortschaft__plz6.plz, plzortschaft__ortschaft.wkb_geometry
+        from externe_daten.plzortschaft__ortschaft
+        left join externe_daten.plzortschaft__ortschaftsname
+                on plzortschaft__ortschaftsname.ortschaftsname_von=plzortschaft__ortschaft._tid
+        left join externe_daten.plzortschaft__plz6
+                on plzortschaft__plz6.plz6_von=plzortschaft__ortschaft._tid
+        where plzortschaft__ortschaft.archive=0 and plzortschaft__plz6.archive=0
+        group by plzortschaft__ortschaft.wkb_geometry,plzortschaft__plz6.plz,plzortschaft__ortschaftsname.text
+        order by plzortschaft__ortschaftsname.text desc) as gemeinden
+        where gemeinden.wkb_geometry&&gebaeudeeingang.lage AND ST_Distance(gemeinden.wkb_geometry,gebaeudeeingang.lage)=0
+        ) as abfrage
+
+select nomenklatur_gelaendename.name as gelaendename, nomenklatur_gelaendename.gem_bfs, nomenklatur_nknachfuehrung.gueltigereintrag as nachfuehrung, now() as importdatum,
+nomenklatur_gelaendenamepos.pos, 
+       case when ori<=300 THEN 90-ori/400*360
+       else 360-ori/400*360+90
+       end as orientierung, nomenklatur_gelaendenamepos.hali, nomenklatur_gelaendenamepos.hali_txt as hali_text, 
+nomenklatur_gelaendenamepos.vali, nomenklatur_gelaendenamepos.vali_txt as vali_text
+from av_avdpool_ng.nomenklatur_gelaendename
+left join av_avdpool_ng.nomenklatur_gelaendenamepos
+on nomenklatur_gelaendenamepos.gelaendenamepos_von=nomenklatur_gelaendename.tid
+left join av_avdpool_ng.nomenklatur_nknachfuehrung
+on nomenklatur_nknachfuehrung.tid=nomenklatur_gelaendename.entstehung
+
+select  gemeindegrenzen_gemeindegrenze.geometrie,gemeindegrenzen_gemeinde.name as gemeindename, gemeindegrenzen_gemeinde.gem_bfs, 
+       gemeindegrenzen_gemnachfuehrung.gueltigereintrag as nachfuehrung, now() as importdatum
+from av_avdpool_ng.gemeindegrenzen_gemeinde
+right join av_avdpool_ng.gemeindegrenzen_gemeindegrenze
+on gemeindegrenzen_gemeindegrenze.gemeindegrenze_von=gemeindegrenzen_gemeinde.tid
+left join av_avdpool_ng.gemeindegrenzen_gemnachfuehrung
+on gemeindegrenzen_gemnachfuehrung.tid=gemeindegrenzen_gemeindegrenze.entstehung
+
+select gemeindegrenzen_projgemeindegrenze.geometrie,gemeindegrenzen_gemeinde.name as gemeindename, gemeindegrenzen_gemeinde.gem_bfs, 
+       gemeindegrenzen_gemnachfuehrung.gueltigereintrag as nachfuehrung, now() as importdatum
+from av_avdpool_ng.gemeindegrenzen_gemeinde
+right join av_avdpool_ng.gemeindegrenzen_projgemeindegrenze
+on gemeindegrenzen_projgemeindegrenze.projgemeindegrenze_von=gemeindegrenzen_gemeinde.tid
+left join av_avdpool_ng.gemeindegrenzen_gemnachfuehrung
+on gemeindegrenzen_gemnachfuehrung.tid=gemeindegrenzen_projgemeindegrenze.entstehung
+
+select liegenschaften_grenzpunkt.geometrie, liegenschaften_grenzpunkt.lagegen as lagegenauigkeit, liegenschaften_grenzpunkt.lagezuv as lagezuverlaessigkeit,
+liegenschaften_grenzpunkt.punktzeichen, liegenschaften_grenzpunkt.punktzeichen_txt as punktzeichen_text, 
+liegenschaften_grenzpunktsymbol.ori as symbolorientierung,liegenschaften_grenzpunkt.gem_bfs,now() as importdatum, liegenschaften_lsnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.liegenschaften_grenzpunkt
+left join av_avdpool_ng.liegenschaften_grenzpunktpos
+on liegenschaften_grenzpunktpos.grenzpunktpos_von=liegenschaften_grenzpunkt.tid
+left join av_avdpool_ng.liegenschaften_grenzpunktsymbol
+on liegenschaften_grenzpunktsymbol.grenzpunktsymbol_von=liegenschaften_grenzpunkt.tid
+left join av_avdpool_ng.liegenschaften_lsnachfuehrung
+on liegenschaften_lsnachfuehrung.tid=liegenschaften_grenzpunkt.entstehung
+
+
+select distinct on (liegenschaften_liegenschaft.geometrie)
+liegenschaften_liegenschaft.geometrie, liegenschaften_grundstueck.nbident, liegenschaften_grundstueck.nummer, liegenschaften_grundstueck.art,
+liegenschaften_grundstueck.art_txt as art_text, liegenschaften_liegenschaft.flaechenmass, liegenschaften_grundstueck.egris_egrid as egrid, liegenschaften_grundstueck.gem_bfs, 
+liegenschaften_grundstueckpos.pos, 
+       case when liegenschaften_grundstueckpos.ori<=300 THEN 90-liegenschaften_grundstueckpos.ori/400*360
+       else 360-liegenschaften_grundstueckpos.ori/400*360+90
+       end as orientierung, liegenschaften_grundstueckpos.hali, liegenschaften_grundstueckpos.hali_txt as hali_text,
+liegenschaften_grundstueckpos.vali, liegenschaften_grundstueckpos.vali_txt as vali_text,now() as importdatum, liegenschaften_lsnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.liegenschaften_grundstueck
+left join av_avdpool_ng.liegenschaften_liegenschaft
+on liegenschaften_liegenschaft.liegenschaft_von=liegenschaften_grundstueck.tid
+left join av_avdpool_ng.liegenschaften_grundstueckpos
+on liegenschaften_grundstueckpos.grundstueckpos_von=liegenschaften_grundstueck.tid
+left join av_avdpool_ng.liegenschaften_lsnachfuehrung
+on liegenschaften_lsnachfuehrung.tid=liegenschaften_grundstueck.entstehung
+where liegenschaften_liegenschaft.geometrie is not null
+UNION
+
+select distinct on (liegenschaften_selbstrecht.geometrie)
+liegenschaften_selbstrecht.geometrie, liegenschaften_grundstueck.nbident, liegenschaften_grundstueck.nummer, liegenschaften_grundstueck.art,
+liegenschaften_grundstueck.art_txt as art_text, liegenschaften_selbstrecht.flaechenmass, liegenschaften_grundstueck.egris_egrid as egrid, liegenschaften_grundstueck.gem_bfs, 
+liegenschaften_grundstueckpos.pos, 
+       case when liegenschaften_grundstueckpos.ori<=300 THEN 90-liegenschaften_grundstueckpos.ori/400*360
+       else 360-liegenschaften_grundstueckpos.ori/400*360+90
+       end as orientierung,  liegenschaften_grundstueckpos.hali, liegenschaften_grundstueckpos.hali_txt as hali_text,
+liegenschaften_grundstueckpos.vali, liegenschaften_grundstueckpos.vali_txt as vali_text,now() as importdatum, liegenschaften_lsnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.liegenschaften_grundstueck
+left join av_avdpool_ng.liegenschaften_grundstueckpos
+on liegenschaften_grundstueckpos.grundstueckpos_von=liegenschaften_grundstueck.tid
+right join av_avdpool_ng.liegenschaften_selbstrecht
+on liegenschaften_selbstrecht.selbstrecht_von=liegenschaften_grundstueck.tid
+left join av_avdpool_ng.liegenschaften_lsnachfuehrung
+on liegenschaften_lsnachfuehrung.tid=liegenschaften_grundstueck.entstehung
+where liegenschaften_selbstrecht.geometrie is not null
+
+select distinct on (liegenschaften_projliegenschaft.geometrie)
+liegenschaften_projliegenschaft.geometrie, liegenschaften_projgrundstueck.nbident, liegenschaften_projgrundstueck.nummer,
+liegenschaften_projgrundstueck.art,liegenschaften_projgrundstueck.art_txt as art_text, liegenschaften_projliegenschaft.flaechenmass, liegenschaften_projgrundstueck.egris_egrid as egrid,
+liegenschaften_projgrundstueck.gem_bfs, liegenschaften_projgrundstueckpos.pos, 
+       case when liegenschaften_projgrundstueckpos.ori<=300 THEN 90-liegenschaften_projgrundstueckpos.ori/400*360
+       else 360-liegenschaften_projgrundstueckpos.ori/400*360+90
+       end as orientierung,liegenschaften_projgrundstueckpos.hali, 
+liegenschaften_projgrundstueckpos.hali_txt as hali_text, liegenschaften_projgrundstueckpos.vali, liegenschaften_projgrundstueckpos.vali_txt as vali_text,now() as importdatum, 
+liegenschaften_lsnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.liegenschaften_projgrundstueck
+left join av_avdpool_ng.liegenschaften_projliegenschaft
+on liegenschaften_projliegenschaft.projliegenschaft_von=liegenschaften_projgrundstueck.tid
+left join av_avdpool_ng.liegenschaften_projgrundstueckpos
+on liegenschaften_projgrundstueckpos.projgrundstueckpos_von=liegenschaften_projgrundstueck.tid
+left join av_avdpool_ng.liegenschaften_lsnachfuehrung
+on liegenschaften_lsnachfuehrung.tid=liegenschaften_projgrundstueck.entstehung
+where liegenschaften_projliegenschaft.geometrie is not NULL
+
+UNION
+
+select distinct on (liegenschaften_projselbstrecht.geometrie)
+liegenschaften_projselbstrecht.geometrie, liegenschaften_projgrundstueck.nbident, liegenschaften_projgrundstueck.nummer, 
+liegenschaften_projgrundstueck.art, liegenschaften_projgrundstueck.art_txt as art_text, liegenschaften_projselbstrecht.flaechenmass, liegenschaften_projgrundstueck.egris_egrid as egrid,
+liegenschaften_projgrundstueck.gem_bfs, liegenschaften_projgrundstueckpos.pos,
+       case when liegenschaften_projgrundstueckpos.ori<=300 THEN 90-liegenschaften_projgrundstueckpos.ori/400*360
+       else 360-liegenschaften_projgrundstueckpos.ori/400*360+90
+       end as orientierung, liegenschaften_projgrundstueckpos.hali, 
+liegenschaften_projgrundstueckpos.hali_txt as hali_text,liegenschaften_projgrundstueckpos.vali, liegenschaften_projgrundstueckpos.vali_txt as vali_text,now() as importdatum, 
+liegenschaften_lsnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.liegenschaften_projgrundstueck
+left join av_avdpool_ng.liegenschaften_projgrundstueckpos
+on liegenschaften_projgrundstueckpos.projgrundstueckpos_von=liegenschaften_projgrundstueck.tid
+right join av_avdpool_ng.liegenschaften_projselbstrecht
+on liegenschaften_projselbstrecht.projselbstrecht_von=liegenschaften_projgrundstueck.tid
+left join av_avdpool_ng.liegenschaften_lsnachfuehrung
+on liegenschaften_lsnachfuehrung.tid=liegenschaften_projgrundstueck.entstehung
+where liegenschaften_projselbstrecht.geometrie is not NULL
+
+select fixpunktekategorie1_lfp1.geometrie, 1 as typ, 'LFP1' as typ_text, fixpunktekategorie1_lfp1.nbident,
+fixpunktekategorie1_lfp1.nummer, fixpunktekategorie1_lfp1.hoehegeom as hoehe, fixpunktekategorie1_lfp1.gem_bfs,
+fixpunktekategorie1_lfp1.lagegen as lagegenauigkeit, fixpunktekategorie1_lfp1.hoehegen as hoehengenauigkeit,fixpunktekategorie1_lfp1.punktzeichen,
+fixpunktekategorie1_lfp1.punktzeichen_txt as punktzeichen_text, now() as importdatum, fixpunktekategorie1_lfp1nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie1_lfp1pos.pos, 
+       case when fixpunktekategorie1_lfp1pos.ori<=300 THEN 90-fixpunktekategorie1_lfp1pos.ori/400*360
+       else 360-fixpunktekategorie1_lfp1pos.ori/400*360+90
+       end as orientierung, fixpunktekategorie1_lfp1pos.hali, fixpunktekategorie1_lfp1pos.hali_txt as hali_text,
+fixpunktekategorie1_lfp1pos.vali,fixpunktekategorie1_lfp1pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie1_lfp1
+left join av_avdpool_ng.fixpunktekategorie1_lfp1pos
+on fixpunktekategorie1_lfp1pos.lfp1pos_von=fixpunktekategorie1_lfp1.tid
+left join av_avdpool_ng.fixpunktekategorie1_lfp1nachfuehrung
+on fixpunktekategorie1_lfp1nachfuehrung.tid=fixpunktekategorie1_lfp1.entstehung
+
+UNION
+
+select fixpunktekategorie2_lfp2.geometrie, 2 as typ, 'LFP2' as typ_text, fixpunktekategorie2_lfp2.nbident,
+fixpunktekategorie2_lfp2.nummer, fixpunktekategorie2_lfp2.hoehegeom as hoehe, fixpunktekategorie2_lfp2.gem_bfs,
+fixpunktekategorie2_lfp2.lagegen as lagegenauigkeit, fixpunktekategorie2_lfp2.hoehegen as hoehengenauigkeit,fixpunktekategorie2_lfp2.punktzeichen,
+fixpunktekategorie2_lfp2.punktzeichen_txt as punktzeichen_text, now() as importdatum, fixpunktekategorie2_lfp2nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie2_lfp2pos.pos, 
+       case when fixpunktekategorie2_lfp2pos.ori<=300 THEN 90-fixpunktekategorie2_lfp2pos.ori/400*360
+       else 360-fixpunktekategorie2_lfp2pos.ori/400*360+90
+       end as orientierung, fixpunktekategorie2_lfp2pos.hali, fixpunktekategorie2_lfp2pos.hali_txt as hali_text,
+fixpunktekategorie2_lfp2pos.vali,fixpunktekategorie2_lfp2pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie2_lfp2
+left join av_avdpool_ng.fixpunktekategorie2_lfp2pos
+on fixpunktekategorie2_lfp2pos.lfp2pos_von=fixpunktekategorie2_lfp2.tid
+left join av_avdpool_ng.fixpunktekategorie2_lfp2nachfuehrung
+on fixpunktekategorie2_lfp2nachfuehrung.tid=fixpunktekategorie2_lfp2.entstehung
+
+UNION
+
+select fixpunktekategorie3_lfp3.geometrie, 3 as typ, 'LFP3' as typ_text, fixpunktekategorie3_lfp3.nbident,
+fixpunktekategorie3_lfp3.nummer, fixpunktekategorie3_lfp3.hoehegeom as hoehe, fixpunktekategorie3_lfp3.gem_bfs,
+fixpunktekategorie3_lfp3.lagegen as lagegenauigkeit, fixpunktekategorie3_lfp3.hoehegen as hoehengenauigkeit,fixpunktekategorie3_lfp3.punktzeichen,
+fixpunktekategorie3_lfp3.punktzeichen_txt as punktzeichen_text, now() as importdatum, fixpunktekategorie3_lfp3nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie3_lfp3pos.pos, 
+       case when fixpunktekategorie3_lfp3pos.ori<=300 THEN 90-fixpunktekategorie3_lfp3pos.ori/400*360
+       else 360-fixpunktekategorie3_lfp3pos.ori/400*360+90
+       end as orientierung, fixpunktekategorie3_lfp3pos.hali, fixpunktekategorie3_lfp3pos.hali_txt as hali_text,
+fixpunktekategorie3_lfp3pos.vali,fixpunktekategorie3_lfp3pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie3_lfp3
+left join av_avdpool_ng.fixpunktekategorie3_lfp3pos
+on fixpunktekategorie3_lfp3pos.lfp3pos_von=fixpunktekategorie3_lfp3.tid
+left join av_avdpool_ng.fixpunktekategorie3_lfp3nachfuehrung
+on fixpunktekategorie3_lfp3nachfuehrung.tid=fixpunktekategorie3_lfp3.entstehung
+
+UNION
+
+select fixpunktekategorie1_hfp1.geometrie, 4 as typ, 'HFP1' as typ_text, fixpunktekategorie1_hfp1.nbident,
+fixpunktekategorie1_hfp1.nummer, fixpunktekategorie1_hfp1.hoehegeom as hoehe, fixpunktekategorie1_hfp1.gem_bfs,
+fixpunktekategorie1_hfp1.lagegen as lagegenauigkeit, fixpunktekategorie1_hfp1.hoehegen as hoehengenauigkeit,null as punktzeichen,
+'' as punktzeichen_text, now() as importdatum, fixpunktekategorie1_hfp1nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie1_hfp1pos.pos, 
+       case when fixpunktekategorie1_hfp1pos.ori<=300 THEN 90-fixpunktekategorie1_hfp1pos.ori/400*360
+       else 360-fixpunktekategorie1_hfp1pos.ori/400*360+90
+       end as orientierung, fixpunktekategorie1_hfp1pos.hali, fixpunktekategorie1_hfp1pos.hali_txt as hali_text,
+fixpunktekategorie1_hfp1pos.vali,fixpunktekategorie1_hfp1pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie1_hfp1
+left join av_avdpool_ng.fixpunktekategorie1_hfp1pos
+on fixpunktekategorie1_hfp1pos.hfp1pos_von=fixpunktekategorie1_hfp1.tid
+left join av_avdpool_ng.fixpunktekategorie1_hfp1nachfuehrung
+on fixpunktekategorie1_hfp1nachfuehrung.tid=fixpunktekategorie1_hfp1.entstehung
+
+UNION
+
+select fixpunktekategorie2_hfp2.geometrie, 5 as typ, 'HFP2' as typ_text, fixpunktekategorie2_hfp2.nbident,
+fixpunktekategorie2_hfp2.nummer, fixpunktekategorie2_hfp2.hoehegeom as hoehe, fixpunktekategorie2_hfp2.gem_bfs,
+fixpunktekategorie2_hfp2.lagegen as lagegenauigkeit, fixpunktekategorie2_hfp2.hoehegen as hoehengenauigkeit,null as punktzeichen,
+'' as punktzeichen_text, now() as importdatum, fixpunktekategorie2_hfp2nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie2_hfp2pos.pos, 
+       case when fixpunktekategorie2_hfp2pos.ori<=300 THEN 90-fixpunktekategorie2_hfp2pos.ori/400*360
+       else 360-fixpunktekategorie2_hfp2pos.ori/400*360+90
+       end as orientierung, fixpunktekategorie2_hfp2pos.hali, fixpunktekategorie2_hfp2pos.hali_txt as hali_text,
+fixpunktekategorie2_hfp2pos.vali,fixpunktekategorie2_hfp2pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie2_hfp2
+left join av_avdpool_ng.fixpunktekategorie2_hfp2pos
+on fixpunktekategorie2_hfp2pos.hfp2pos_von=fixpunktekategorie2_hfp2.tid
+left join av_avdpool_ng.fixpunktekategorie2_hfp2nachfuehrung
+on fixpunktekategorie2_hfp2nachfuehrung.tid=fixpunktekategorie2_hfp2.entstehung
+
+UNION
+
+select fixpunktekategorie3_hfp3.geometrie, 6 as typ, 'HFP3' as typ_text, fixpunktekategorie3_hfp3.nbident,
+fixpunktekategorie3_hfp3.nummer, fixpunktekategorie3_hfp3.hoehegeom as hoehe, fixpunktekategorie3_hfp3.gem_bfs,
+fixpunktekategorie3_hfp3.lagegen as lagegenauigkeit, fixpunktekategorie3_hfp3.hoehegen as hoehengenauigkeit,null as punktzeichen,
+'' as punktzeichen_text, now() as importdatum, fixpunktekategorie3_hfp3nachfuehrung.gueltigereintrag as nachfuehrung,
+fixpunktekategorie3_hfp3pos.pos, 
+       case when fixpunktekategorie3_hfp3pos.ori<=300 THEN 90-fixpunktekategorie3_hfp3pos.ori/400*360
+       else 360-fixpunktekategorie3_hfp3pos.ori/400*360+90
+       end as orientierung,fixpunktekategorie3_hfp3pos.hali, fixpunktekategorie3_hfp3pos.hali_txt as hali_text,
+fixpunktekategorie3_hfp3pos.vali,fixpunktekategorie3_hfp3pos.vali_txt as vali_text
+from av_avdpool_ng.fixpunktekategorie3_hfp3
+left join av_avdpool_ng.fixpunktekategorie3_hfp3pos
+on fixpunktekategorie3_hfp3pos.hfp3pos_von=fixpunktekategorie3_hfp3.tid
+left join av_avdpool_ng.fixpunktekategorie3_hfp3nachfuehrung
+on fixpunktekategorie3_hfp3nachfuehrung.tid=fixpunktekategorie3_hfp3.entstehung
+
+select gemeindegrenzen_hoheitsgrenzpunkt.geometrie, gemeindegrenzen_hoheitsgrenzpunkt.identifikator as nummer, gemeindegrenzen_hoheitsgrenzpunkt.punktzeichen,
+gemeindegrenzen_hoheitsgrenzpunkt.punktzeichen_txt as punktzeichen_text,gemeindegrenzen_hoheitsgrenzpunkt.hoheitsgrenzstein_txt as schoener_stein, gemeindegrenzen_hoheitsgrenzpunkt.lagegen as lagegenauigkeit, gemeindegrenzen_hoheitsgrenzpunkt.lagezuv as lagezuverlaessigkeit,
+       case when gemeindegrenzen_hoheitsgrenzpunktsymbol.ori<=200 THEN gemeindegrenzen_hoheitsgrenzpunktsymbol.ori/400*360
+            else -360+gemeindegrenzen_hoheitsgrenzpunktsymbol.ori/400*360
+       end as symbolorientierung, gemeindegrenzen_hoheitsgrenzpunktpos.pos, 
+       case when gemeindegrenzen_hoheitsgrenzpunktpos.ori<=300 THEN 90-gemeindegrenzen_hoheitsgrenzpunktpos.ori/400*360
+       else 360-gemeindegrenzen_hoheitsgrenzpunktpos.ori/400*360+90
+       end as orientierung, 
+gemeindegrenzen_hoheitsgrenzpunktpos.hali, gemeindegrenzen_hoheitsgrenzpunktpos.hali_txt as hali_text, gemeindegrenzen_hoheitsgrenzpunktpos.vali, gemeindegrenzen_hoheitsgrenzpunktpos.vali_txt as vali_text,
+gemeindegrenzen_hoheitsgrenzpunkt.gem_bfs, gemeindegrenzen_gemnachfuehrung.gueltigereintrag as nachfuehrung,now() as importdatum
+from av_avdpool_ng.gemeindegrenzen_hoheitsgrenzpunkt
+left join av_avdpool_ng.gemeindegrenzen_hoheitsgrenzpunktpos
+on gemeindegrenzen_hoheitsgrenzpunktpos.hoheitsgrenzpunktpos_von=gemeindegrenzen_hoheitsgrenzpunkt.tid
+left join av_avdpool_ng.gemeindegrenzen_hoheitsgrenzpunktsymbol
+on gemeindegrenzen_hoheitsgrenzpunktsymbol.hoheitsgrenzpunktsymbol_von=gemeindegrenzen_hoheitsgrenzpunkt.tid
+left join av_avdpool_ng.gemeindegrenzen_gemnachfuehrung
+on gemeindegrenzen_gemnachfuehrung.tid=gemeindegrenzen_hoheitsgrenzpunkt.entstehung
+
+
+select nomenklatur_ortsname.geometrie, nomenklatur_ortsname.name as ortsname, nomenklatur_ortsnamepos.pos, 
+       case when nomenklatur_ortsnamepos.ori<=300 THEN 90-nomenklatur_ortsnamepos.ori/400*360
+       else 360-nomenklatur_ortsnamepos.ori/400*360+90
+       end as orientierung,
+nomenklatur_ortsnamepos.hali, nomenklatur_ortsnamepos.hali_txt as hali_text, nomenklatur_ortsnamepos.vali,nomenklatur_ortsnamepos.vali_txt as vali_text, nomenklatur_ortsname.gem_bfs,
+now() as importdatum, nomenklatur_nknachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.nomenklatur_ortsname
+left join av_avdpool_ng.nomenklatur_ortsnamepos
+on nomenklatur_ortsnamepos.ortsnamepos_von=nomenklatur_ortsname.tid
+left join av_avdpool_ng.nomenklatur_nknachfuehrung
+on nomenklatur_nknachfuehrung.tid=nomenklatur_ortsname.entstehung
+
+
+select rohrleitungen_linienelement.geometrie, rohrleitungen_leitungsobjekt.art, rohrleitungen_leitungsobjekt.art_txt as art_text,
+rohrleitungen_leitungsobjekt.betreiber, rohrleitungen_linienelement.gem_bfs, now() as importdatum, rohrleitungen_rlnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.rohrleitungen_linienelement
+left join av_avdpool_ng.rohrleitungen_leitungsobjekt
+on rohrleitungen_linienelement.linienelement_von=rohrleitungen_leitungsobjekt.tid
+left join av_avdpool_ng.rohrleitungen_rlnachfuehrung
+on rohrleitungen_rlnachfuehrung.tid=rohrleitungen_leitungsobjekt.entstehung
+
+
+select gebaeudeadressen_lokalisationsname.text as strassenname, gebaeudeadressen_lokalisationsnamepos.pos, 
+       case when gebaeudeadressen_lokalisationsnamepos.ori<=300 THEN 90-gebaeudeadressen_lokalisationsnamepos.ori/400*360
+       else 360-gebaeudeadressen_lokalisationsnamepos.ori/400*360+90
+       end as orientierung,gebaeudeadressen_lokalisationsnamepos.hali, gebaeudeadressen_lokalisationsnamepos.hali_txt as hali_text,
+gebaeudeadressen_lokalisationsnamepos.vali, gebaeudeadressen_lokalisationsnamepos.vali_txt as vali_text, gebaeudeadressen_lokalisationsname.gem_bfs, now() as importdatum,
+gebaeudeadressen_gebnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.gebaeudeadressen_lokalisationsname
+left join av_avdpool_ng.gebaeudeadressen_lokalisationsnamepos
+on gebaeudeadressen_lokalisationsnamepos.lokalisationsnamepos_von=gebaeudeadressen_lokalisationsname.tid
+left join av_avdpool_ng.gebaeudeadressen_lokalisation
+on gebaeudeadressen_lokalisation.tid=gebaeudeadressen_lokalisationsname.benannte
+left join av_avdpool_ng.gebaeudeadressen_gebnachfuehrung
+on gebaeudeadressen_gebnachfuehrung.tid=gebaeudeadressen_lokalisation.entstehung
+
+select gebaeudeadressen_strassenstueck.geometrie, gebaeudeadressen_lokalisationsname.text as strassenname, gebaeudeadressen_strassenstueck.ordnung,
+gebaeudeadressen_strassenstueck.gem_bfs, now() as importdatum, gebaeudeadressen_gebnachfuehrung.gueltigereintrag as nachfuehrung
+from av_avdpool_ng.gebaeudeadressen_strassenstueck
+left join av_avdpool_ng.gebaeudeadressen_lokalisation
+on gebaeudeadressen_lokalisation.tid=gebaeudeadressen_strassenstueck.strassenstueck_von
+left join av_avdpool_ng.gebaeudeadressen_lokalisationsname
+on gebaeudeadressen_lokalisationsname.benannte=gebaeudeadressen_lokalisation.tid
+left join av_avdpool_ng.gebaeudeadressen_gebnachfuehrung
+on gebaeudeadressen_gebnachfuehrung.tid=gebaeudeadressen_lokalisation.entstehung
+

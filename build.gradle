@@ -1,0 +1,20 @@
+description = """\n
+"""
+
+ext {
+    targetDbUrl = "jdbc:postgresql://geodb-dev.cgjofbdf5rqg.eu-central-1.rds.amazonaws.com:5432/xanadu2"
+    targetDbUser = "stefan"
+    targetDbPass = System.env.targetDbPass
+}
+
+import ch.so.agi.gretl.steps.*
+
+task transformMOpublic(type: Db2DbTask) {
+    description = "Datenumbau in das SO-MOpublic-Publikationsmodell."
+    sourceDb =  [sourceDbUrl, sourceDbUser, sourceDbPass]
+    targetDb = [targetDbUrl, targetDbUser, targetDbPass]
+    transferSets = [
+            //new TransferSet("transform_av_mopublic_bodenbedeckung.sql", 'av_mopublic.mopublic_bodenbedeckung', true),
+            new TransferSet("transform_av_mopublic_bodenbedeckung_proj.sql", 'av_mopublic.mopublic_bodenbedeckung_proj', true)
+    ]
+}
