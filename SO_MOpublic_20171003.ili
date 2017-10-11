@@ -1,5 +1,22 @@
 INTERLIS 2.3;
 
+!!============================================================================== 
+!!@ File = "SO_MOpublic_20171003.ili"; 
+!!@ Title = "MOpublic"; 
+!!@ shortDescription = "Publikationsmodell für die amtliche Vermessung des  
+!!@ Kantons Solothurn";  
+!!@ Issuer = "http://agi.so.ch"; 
+!!@ technicalContact = "http://agi.so.ch"; 
+!!@ furtherInformation = "";
+!!  Publikationsmodell;
+!!  Compiler-Version = "4.7.3-20170524"; 
+!!------------------------------------------------------------------------------ 
+!! Version    | wer | Änderung 
+!!------------------------------------------------------------------------------ 
+!! 2017-10-03 | sz  | Erstfassung
+!! 2017-10-10 | sz  | Anpassung nach Review ns
+!!============================================================================== 
+
 MODEL SO_MOpublic_20171003 (de)
 AT "http://www.geo.so.ch/models/AGI"
 VERSION "2017-10-03"  =
