@@ -7,7 +7,7 @@ SELECT
     END AS art_txt,
     bb.gem_bfs AS bfs_nr,
     gebnr.gwr_egid AS egid,
-    now() AS importdatum,
+    bb.lieferdatum AS importdatum,
     to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung,
     bb.geometrie
 FROM

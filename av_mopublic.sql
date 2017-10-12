@@ -3,11 +3,11 @@ CREATE SEQUENCE av_mopublic.t_ili2db_seq;;
 CREATE TABLE av_mopublic.mopublic_bodenbedeckung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,bfs_nr integer NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
   ,egid integer NULL
-  ,importdatum timestamp NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -32,11 +32,11 @@ COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung.geometrie IS 'Geometrie
 CREATE TABLE av_mopublic.mopublic_bodenbedeckung_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,bfs_nr integer NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
   ,egid integer NULL
-  ,importdatum timestamp NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -61,11 +61,11 @@ COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung_proj.geometrie IS 'Geometr
 CREATE TABLE av_mopublic.mopublic_einzelobjekt_flaeche (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,bfs_nr integer NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
   ,egid integer NULL
-  ,importdatum timestamp NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -90,10 +90,10 @@ COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_flaeche.geometrie IS 'Geomet
 CREATE TABLE av_mopublic.mopublic_einzelobjekt_linie (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -116,10 +116,10 @@ COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_linie.geometrie IS 'Geometri
 CREATE TABLE av_mopublic.mopublic_gemeindegrenze (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,gemeindename varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
-  ,nachfuehrung time NULL
+  ,gemeindename varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
+  ,nachfuehrung date NULL
 )
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_gemeindegrenze','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
@@ -139,9 +139,9 @@ COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze.nachfuehrung IS 'Datum der
 CREATE TABLE av_mopublic.mopublic_gemeindegrenze_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,gemeindename varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,gemeindename varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -162,11 +162,11 @@ COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze_proj.nachfuehrung IS 'Datu
 CREATE TABLE av_mopublic.mopublic_rohrleitung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(40) NULL
-  ,betreiber varchar(40) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(40) NOT NULL
+  ,betreiber varchar(40) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -192,9 +192,9 @@ CREATE TABLE av_mopublic.mopublic_strassenachse (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
   ,strassenname varchar(100) NULL
-  ,ordnung integer NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,ordnung integer NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -213,53 +213,53 @@ COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Einzelobjekte_Punkt
-CREATE TABLE av_mopublic.mopublic_einzelobjekte_punkt (
+-- SO_MOpublic_20171003.MOpublic.Einzelobjekt_Punkt
+CREATE TABLE av_mopublic.mopublic_einzelobjekt_punkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,symbolorientierung decimal(5,2) NULL
-  ,importdatum timestamp NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,symbolorientierung decimal(5,2) NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
-SELECT AddGeometryColumn('av_mopublic','mopublic_einzelobjekte_punkt','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
-CREATE INDEX mopublic_einzelobjekt_pnkt_geometrie_idx ON av_mopublic.mopublic_einzelobjekte_punkt USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_einzelobjekte_punkt IS '@iliname SO_MOpublic_20171003.MOpublic.Einzelobjekte_Punkt';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.art IS 'Einzelobjektart (Integer-ReprÃ¤sentation)
+SELECT AddGeometryColumn('av_mopublic','mopublic_einzelobjekt_punkt','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
+CREATE INDEX mopublic_einzelobjekt_pnkt_geometrie_idx ON av_mopublic.mopublic_einzelobjekt_punkt USING GIST ( geometrie );
+COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_punkt IS '@iliname SO_MOpublic_20171003.MOpublic.Einzelobjekt_Punkt';
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.art IS 'Einzelobjektart (Integer-ReprÃ¤sentation)
 @iliname Art';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.art_txt IS 'Einzelobjektart (Text-ReprÃ¤sentation)
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.art_txt IS 'Einzelobjektart (Text-ReprÃ¤sentation)
 @iliname Art_txt';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.bfs_nr IS 'Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.bfs_nr IS 'Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
 @iliname BFS_Nr';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.symbolorientierung IS 'Orientierung des Symbols
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.symbolorientierung IS 'Orientierung des Symbols
 @iliname Symbolorientierung';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.importdatum IS 'Importdatum
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.importdatum IS 'Importdatum
 @iliname Importdatum';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
-COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekte_punkt.geometrie IS 'Geometrie
+COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.geometrie IS 'Geometrie
 @iliname Geometrie';
 -- SO_MOpublic_20171003.MOpublic.Fixpunkt
 CREATE TABLE av_mopublic.mopublic_fixpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,typ integer NULL
-  ,typ_txt varchar(20) NULL
-  ,nbident varchar(12) NULL
+  ,typ integer NOT NULL
+  ,typ_txt varchar(20) NOT NULL
+  ,nbident varchar(12) NOT NULL
   ,nummer varchar(12) NULL
   ,hoehe decimal(7,3) NULL
-  ,bfs_nr integer NULL
-  ,lagegenauigkeit decimal(4,1) NULL
+  ,bfs_nr integer NOT NULL
+  ,lagegenauigkeit decimal(4,1) NOT NULL
   ,hoehengenauigkeit decimal(4,1) NULL
-  ,punktzeichen integer NULL
-  ,punktzeichen_txt varchar(20) NULL
+  ,punktzeichen integer NOT NULL
+  ,punktzeichen_txt varchar(20) NOT NULL
   ,orientierung decimal(5,2) NULL
   ,hali varchar(255) NULL
   ,vali varchar(255) NULL
-  ,importdatum timestamp NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -306,13 +306,13 @@ COMMENT ON COLUMN av_mopublic.mopublic_fixpunkt.nachfuehrung IS 'Datum der Nachf
 CREATE TABLE av_mopublic.mopublic_flurname (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,flurname varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,hali varchar(255) NULL
-  ,valignment varchar(255) NULL
-  ,importdatum timestamp NULL
+  ,flurname varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
-  ,orientierung decimal(5,2) NULL
+  ,orientierung decimal(5,2) NOT NULL
 )
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_flurname','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
@@ -330,8 +330,8 @@ COMMENT ON COLUMN av_mopublic.mopublic_flurname.pos IS 'Positionierungspunkt fÃ
 @iliname Pos';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.hali IS 'HAlignment
 @iliname HAli';
-COMMENT ON COLUMN av_mopublic.mopublic_flurname.valignment IS 'VAlignment
-@iliname VAlignment';
+COMMENT ON COLUMN av_mopublic.mopublic_flurname.vali IS 'VAlignment
+@iliname VAli';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
@@ -346,17 +346,17 @@ CREATE TABLE av_mopublic.mopublic_gebaeudeadresse (
   ,hausnummer varchar(20) NULL
   ,egid integer NULL
   ,edid integer NULL
-  ,plz integer NULL
-  ,ortschaft varchar(100) NULL
+  ,plz integer NOT NULL
+  ,ortschaft varchar(100) NOT NULL
   ,status varchar(20) NULL
   ,ist_offizielle_bezeichnung boolean NULL
   ,hoehenlage integer NULL
   ,gebaeudename varchar(100) NULL
-  ,bfs_nr integer NULL
+  ,bfs_nr integer NOT NULL
   ,orientierung decimal(5,2) NULL
   ,hali varchar(255) NULL
   ,vali varchar(255) NULL
-  ,importdatum timestamp NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -404,13 +404,13 @@ COMMENT ON COLUMN av_mopublic.mopublic_gebaeudeadresse.nachfuehrung IS 'Datum de
 CREATE TABLE av_mopublic.mopublic_gelaendename (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,gelaendename varchar(100) NULL
-  ,bfs_nr integer NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,importdatum timestamp NULL
-  ,nachfuehrung time NULL
+  ,gelaendename varchar(100) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,importdatum timestamp NOT NULL
+  ,nachfuehrung date NULL
 )
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_gelaendename','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
@@ -436,13 +436,13 @@ COMMENT ON COLUMN av_mopublic.mopublic_gelaendename.nachfuehrung IS 'Datum der N
 CREATE TABLE av_mopublic.mopublic_grenzpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,lagegenauigkeit decimal(4,1) NULL
-  ,lagezuverlaessigkeit boolean NULL
-  ,punktzeichen integer NULL
-  ,punktzeichen_txt varchar(20) NULL
+  ,lagegenauigkeit decimal(4,1) NOT NULL
+  ,lagezuverlaessigkeit boolean NOT NULL
+  ,punktzeichen integer NOT NULL
+  ,punktzeichen_txt varchar(20) NOT NULL
   ,symbolorientierung decimal(8,5) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -471,17 +471,17 @@ COMMENT ON COLUMN av_mopublic.mopublic_grenzpunkt.nachfuehrung IS 'Datum der Nac
 CREATE TABLE av_mopublic.mopublic_grundstueck (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,nbident varchar(12) NULL
-  ,nummer varchar(15) NULL
-  ,art integer NULL
-  ,art_txt varchar(20) NULL
-  ,flaechenmass integer NULL
+  ,nbident varchar(12) NOT NULL
+  ,nummer varchar(15) NOT NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(40) NOT NULL
+  ,flaechenmass integer NOT NULL
   ,egrid varchar(14) NULL
-  ,bfs_nr integer NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,importdatum timestamp NULL
+  ,bfs_nr integer NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -522,18 +522,18 @@ COMMENT ON COLUMN av_mopublic.mopublic_grundstueck.nachfuehrung IS 'Datum der Na
 CREATE TABLE av_mopublic.mopublic_grundstueck_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,nbident varchar(12) NULL
-  ,nummer varchar(15) NULL
-  ,art integer NULL
-  ,art_txt varchar(20) NULL
-  ,flaechenmass integer NULL
+  ,nbident varchar(12) NOT NULL
+  ,nummer varchar(15) NOT NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(40) NOT NULL
+  ,flaechenmass integer NOT NULL
   ,egrid varchar(14) NULL
-  ,bfs_nr integer NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,importdatum timestamp NULL
-  ,nachfuehrung time NULL
+  ,bfs_nr integer NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,importdatum timestamp NOT NULL
+  ,nachfuehrung date NULL
 )
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_grundstueck_proj','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
@@ -574,16 +574,16 @@ CREATE TABLE av_mopublic.mopublic_hoheitsgrenzpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
   ,nummer varchar(20) NULL
-  ,punktzeichen integer NULL
-  ,punktzeichen_txt varchar(20) NULL
-  ,schoener_stein boolean NULL
-  ,lagegenauigkeit decimal(4,1) NULL
-  ,lagezuverlaessigkeit boolean NULL
+  ,punktzeichen integer NOT NULL
+  ,punktzeichen_txt varchar(20) NOT NULL
+  ,schoener_stein boolean NOT NULL
+  ,lagegenauigkeit decimal(4,1) NOT NULL
+  ,lagezuverlaessigkeit boolean NOT NULL
   ,symbolorientierung decimal(5,2) NULL
   ,hali varchar(255) NULL
   ,vali varchar(255) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -624,17 +624,17 @@ COMMENT ON COLUMN av_mopublic.mopublic_hoheitsgrenzpunkt.pos IS 'Positionierungs
 CREATE TABLE av_mopublic.mopublic_objektname_pos (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,objektname varchar(100) NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,art integer NULL
-  ,art_txt varchar(100) NULL
-  ,herkunft varchar(255) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,objektname varchar(100) NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,art integer NOT NULL
+  ,art_txt varchar(100) NOT NULL
+  ,herkunft varchar(255) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
-  ,status varchar(20) NULL
+  ,status varchar(20) NOT NULL
 )
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_objektname_pos','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
@@ -668,12 +668,12 @@ COMMENT ON COLUMN av_mopublic.mopublic_objektname_pos.status IS 'Status der Geom
 CREATE TABLE av_mopublic.mopublic_ortsname (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,ortsname varchar(40) NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,ortsname varchar(40) NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -704,12 +704,12 @@ COMMENT ON COLUMN av_mopublic.mopublic_ortsname.nachfuehrung IS 'Datum der Nachf
 CREATE TABLE av_mopublic.mopublic_strassenname_pos (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
-  ,strassenname varchar(100) NULL
-  ,orientierung decimal(5,2) NULL
-  ,hali varchar(255) NULL
-  ,vali varchar(255) NULL
-  ,bfs_nr integer NULL
-  ,importdatum timestamp NULL
+  ,strassenname varchar(100) NOT NULL
+  ,orientierung decimal(5,2) NOT NULL
+  ,hali varchar(255) NOT NULL
+  ,vali varchar(255) NOT NULL
+  ,bfs_nr integer NOT NULL
+  ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
 )
 ;
@@ -800,7 +800,7 @@ CREATE TABLE av_mopublic.T_ILI2DB_MODEL (
   ,modelName text NOT NULL
   ,content text NOT NULL
   ,importDate timestamp NOT NULL
-  ,PRIMARY KEY (iliversion,modelName)
+  ,PRIMARY KEY (modelName,iliversion)
 )
 ;
 CREATE TABLE av_mopublic.halignment (
@@ -837,7 +837,7 @@ CREATE TABLE av_mopublic.T_ILI2DB_ATTRNAME (
   ,SqlName varchar(1024) NOT NULL
   ,Owner varchar(1024) NOT NULL
   ,Target varchar(1024) NULL
-  ,PRIMARY KEY (Owner,SqlName)
+  ,PRIMARY KEY (SqlName,Owner)
 )
 ;
 CREATE TABLE av_mopublic.T_ILI2DB_COLUMN_PROP (
@@ -856,7 +856,7 @@ CREATE TABLE av_mopublic.T_ILI2DB_TABLE_PROP (
 ;
 CREATE UNIQUE INDEX T_ILI2DB_DATASET_datasetName_key ON av_mopublic.T_ILI2DB_DATASET (datasetName)
 ;
-CREATE UNIQUE INDEX T_ILI2DB_MODEL_iliversion_modelName_key ON av_mopublic.T_ILI2DB_MODEL (iliversion,modelName)
+CREATE UNIQUE INDEX T_ILI2DB_MODEL_modelName_iliversion_key ON av_mopublic.T_ILI2DB_MODEL (modelName,iliversion)
 ;
-CREATE UNIQUE INDEX T_ILI2DB_ATTRNAME_Owner_SqlName_key ON av_mopublic.T_ILI2DB_ATTRNAME (Owner,SqlName)
+CREATE UNIQUE INDEX T_ILI2DB_ATTRNAME_SqlName_Owner_key ON av_mopublic.T_ILI2DB_ATTRNAME (SqlName,Owner)
 ;

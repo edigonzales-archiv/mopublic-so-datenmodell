@@ -1,5 +1,4 @@
 INTERLIS 2.3;
-
 !!============================================================================== 
 !!@ File = "SO_MOpublic_20171003.ili"; 
 !!@ Title = "MOpublic"; 
@@ -15,6 +14,10 @@ INTERLIS 2.3;
 !!------------------------------------------------------------------------------ 
 !! 2017-10-03 | sz  | Erstfassung
 !! 2017-10-10 | sz  | Anpassung nach Review ns
+!! 2017-10-12 | sz  | Grundstueck(_Proj).Art_txt -> 40 Zeichen
+!!            | sz  | XMLTime -> XMLDate
+!!            | sz  | Einzelobjekte_Punkt -> Einzelobjekt_Punkt
+!!            | sz  | VAlignmet -> VAli
 !!============================================================================== 
 
 MODEL SO_MOpublic_20171003 (de)
@@ -143,7 +146,7 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch Geometer
        */
-      Nachfuehrung : INTERLIS.XMLTime;
+      Nachfuehrung : INTERLIS.XMLDate;
     END Gemeindegrenze;
 
     CLASS Gemeindegrenze_proj =
@@ -209,7 +212,7 @@ VERSION "2017-10-03"  =
       Nachfuehrung : INTERLIS.XMLDate;
     END Strassenachse;
 
-    CLASS Einzelobjekte_Punkt =
+    CLASS Einzelobjekt_Punkt =
       /** Einzelobjektart (Integer-Repräsentation)
        */
       Art : MANDATORY 0 .. 41;
@@ -231,7 +234,7 @@ VERSION "2017-10-03"  =
       /** Geometrie
        */
       Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
-    END Einzelobjekte_Punkt;
+    END Einzelobjekt_Punkt;
 
     CLASS Fixpunkt =
       /** Geometrie
@@ -305,7 +308,7 @@ VERSION "2017-10-03"  =
       HAli : MANDATORY INTERLIS.HALIGNMENT;
       /** VAlignment
        */
-      VAlignment : MANDATORY INTERLIS.VALIGNMENT;
+      VAli : MANDATORY INTERLIS.VALIGNMENT;
       /** Importdatum
        */
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
@@ -398,7 +401,7 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch Geometer
        */
-      Nachfuehrung : INTERLIS.XMLTime;
+      Nachfuehrung : INTERLIS.XMLDate;
     END Gelaendename;
 
     CLASS Grenzpunkt =
@@ -446,7 +449,7 @@ VERSION "2017-10-03"  =
       Art : MANDATORY 0 .. 2;
       /** Grundstücksart (Text-Repräsentation)
        */
-      Art_txt : MANDATORY TEXT*20;
+      Art_txt : MANDATORY TEXT*40;
       /** Fläche des Grundstückes in m2
        */
       Flaechenmass : MANDATORY 0 .. 9999999999;
@@ -491,7 +494,7 @@ VERSION "2017-10-03"  =
       Art : MANDATORY 0 .. 2;
       /** Grundstücksart (Text-Repräsentation)
        */
-      Art_txt : MANDATORY TEXT*20;
+      Art_txt : MANDATORY TEXT*40;
       /** Fläche des Grundstückes in m2
        */
       Flaechenmass : MANDATORY 0 .. 9999999999;
@@ -518,7 +521,7 @@ VERSION "2017-10-03"  =
       Importdatum : MANDATORY INTERLIS.XMLDateTime;
       /** Datum der Nachführung durch Geometer
        */
-      Nachfuehrung : INTERLIS.XMLTime;
+      Nachfuehrung : INTERLIS.XMLDate;
     END Grundstueck_proj;
 
     CLASS Hoheitsgrenzpunkt =

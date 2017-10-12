@@ -13,5 +13,9 @@
 !!------------------------------------------------------------------------------ 
 !! 2017-10-03 | sz  | Erstfassung
 !! 2017-10-10 | sz  | Anpassung nach Review ns
+!! 2017-10-12 | sz  | Grundstueck(_Proj).Art_txt -> 40 Zeichen
+!!            | sz  | XMLTime -> XMLDate
+!!            | sz  | Einzelobjekte_Punkt -> Einzelobjekt_Punkt
+!!            | sz  | VAlignmet -> VAli
 !!============================================================================== 
 
