@@ -1,206 +1,106 @@
-WITH eof AS
-(
-    SELECT
-        DISTINCT ON (eo.tid)    
-        eo.tid,
-        eo.entstehung,
-        eo.art,
-        split_part(eo.art_txt,'.',array_upper(string_to_array(eo.art_txt,'.'), 1)) AS art_txt,
-        to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung
+/*
+ * PLZ/Ortschaft wird noch nicht berücksichtigt.
+ * Datenablage/-organisation in sogis-DB ist noch
+ * unbefriedigend und alt.
+ */
+
+/*
+ * PLZ/Ortschaft wird noch nicht berücksichtigt.
+ * Datenablage/-organisation in sogis-DB ist noch
+ * unbefriedigend und alt.
+ */
+
+WITH strassenname AS (
+    SELECT 
+        lok.tid AS lok_tid,
+        lokname."text" AS strassenname
     FROM
-        av_avdpool_ng.einzelobjekte_flaechenelement AS f
-        LEFT JOIN av_avdpool_ng.einzelobjekte_einzelobjekt AS eo
-        ON f.flaechenelement_von = eo.tid
-        LEFT JOIN av_avdpool_ng.einzelobjekte_eonachfuehrung AS nf
-        ON eo.entstehung = nf.tid
+        av_avdpool_ng.gebaeudeadressen_lokalisation AS lok
+        LEFT JOIN av_avdpool_ng.gebaeudeadressen_lokalisationsname AS lokname
+        ON lokname.benannte = lok.tid   
 ),
-eol AS
-(
+gebaeudeeingang AS (
     SELECT
-        DISTINCT ON (eo.tid)
-        eo.tid,
-        eo.entstehung,
-        eo.art,
-        split_part(eo.art_txt,'.',array_upper(string_to_array(eo.art_txt,'.'), 1)) AS art_txt,
-        to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung
-    FROM
-        av_avdpool_ng.einzelobjekte_linienelement AS l
-        LEFT JOIN av_avdpool_ng.einzelobjekte_einzelobjekt AS eo
-        ON l.linienelement_von = eo.tid
-        LEFT JOIN av_avdpool_ng.einzelobjekte_eonachfuehrung AS nf
-        ON eo.entstehung = nf.tid
-),
-eop AS
-(
-    SELECT
-        DISTINCT ON (eo.tid)
-        eo.tid,
-        eo.entstehung,
-        eo.art,
-        split_part(eo.art_txt,'.',array_upper(string_to_array(eo.art_txt,'.'), 1)) AS art_txt,
-        to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung
-    FROM
-        av_avdpool_ng.einzelobjekte_punktelement AS p
-        LEFT JOIN av_avdpool_ng.einzelobjekte_einzelobjekt AS eo
-        ON p.punktelement_von = eo.tid
-        LEFT JOIN av_avdpool_ng.einzelobjekte_eonachfuehrung AS nf
-        ON eo.entstehung = nf.tid
-),
-eopos AS
-(
-    SELECT
-        o.objektname_von,
-        o."name" AS objektname,
+        g.gebaeudeeingang_von AS lok_tid,
+        g.hoehenlage,
+        g.lage,
+        g.hausnummer,
+        g.gwr_egid AS egid,
+        g.gwr_edid AS edid,
+        g.status_txt AS status,
+        CASE 
+            WHEN istoffiziellebezeichnung_txt = 'ja' THEN TRUE
+            ELSE FALSE 
+        END AS ist_offizielle_bezeichnung,
+        n."text" AS gebaeudename, -- always empty?
+        g.gem_bfs AS bfs_nr,
         CASE
-            WHEN p.ori IS NULL THEN 0
-            ELSE (100 - p.ori) * 0.9 
+            WHEN h.ori IS NULL THEN 0
+            ELSE (100 - h.ori) * 0.9 
         END AS orientierung,
         CASE 
-            WHEN p.hali_txt IS NULL THEN 'Center'
-            ELSE p.hali_txt
+            WHEN h.hali_txt IS NULL THEN 'Center'
+            ELSE h.hali_txt
         END AS hali,
         CASE 
-            WHEN p.vali_txt IS NULL THEN 'Half'
-            ELSE p.vali_txt
+            WHEN h.vali_txt IS NULL THEN 'Half'
+            ELSE h.vali_txt
         END AS vali,
-        p.pos,
-        p.gem_bfs AS bfs_nr,
-        p.lieferdatum AS importdatum
+        g.lieferdatum AS importdatum,
+        to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung,
+        h.pos
     FROM
-        av_avdpool_ng.einzelobjekte_objektname AS o
-        INNER JOIN av_avdpool_ng.einzelobjekte_objektnamepos AS p
-        ON p.objektnamepos_von = o.tid
-    WHERE 
-        p.pos IS NOT NULL
+        av_avdpool_ng.gebaeudeadressen_gebaeudeeingang AS g
+        LEFT JOIN av_avdpool_ng.gebaeudeadressen_hausnummerpos AS h
+        ON h.hausnummerpos_von = g.tid
+        LEFT JOIN av_avdpool_ng.gebaeudeadressen_gebnachfuehrung AS nf
+        ON g.entstehung = nf.tid
+        LEFT JOIN av_avdpool_ng.gebaeudeadressen_gebaeudename AS n 
+        ON n.gebaeudename_von = g.tid
+),
+gebaeudeeingang_strassenname AS
+(
+    SELECT
+        s.lok_tid, 
+        s.strassenname, 
+        g.hoehenlage, 
+        g.lage, 
+        g.hausnummer, 
+        g.egid, 
+        g.edid,
+        g.status,
+        g.ist_offizielle_bezeichnung,
+        g.gebaeudename,
+        g.bfs_nr, 
+        g.orientierung,
+        g.hali,
+        g.vali,
+        g.importdatum,
+        g.nachfuehrung,
+        g.pos
+    FROM
+        strassenname AS s
+        RIGHT JOIN gebaeudeeingang AS g
+        ON s.lok_tid = g.lok_tid
 )
 SELECT 
-    o."name" AS objektname,
-    CASE
-        WHEN p.ori IS NULL THEN 0
-        ELSE (100 - p.ori) * 0.9 
-    END AS orientierung,
-    CASE 
-        WHEN p.hali_txt IS NULL THEN 'Center'
-        ELSE p.hali_txt
-    END AS hali,
-    CASE 
-        WHEN p.vali_txt IS NULL THEN 'Half'
-        ELSE p.vali_txt
-    END AS vali,
-    bb.art,
-    CASE 
-        WHEN split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))='fliessendes' THEN 'fliessendes Gewaesser'
-        WHEN split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))='stehendes' THEN 'stehendes Gewaesser'
-        ELSE split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))
-    END AS art_txt,
-    'BB' AS herkunft,
-    p.gem_bfs AS bfs_nr,
-    p.lieferdatum AS importdatum,
-    to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung,
-    'realisiert' AS status,
-    p.pos 
+    s.strassenname,
+    s.hausnummer,
+    s.egid,
+    s.edid,
+    -1 AS plz,
+    'fubar' AS ortschaft,
+    s.status,
+    s.ist_offizielle_bezeichnung,
+    s.hoehenlage,
+    s.gebaeudename,
+    s.bfs_nr,
+    s.orientierung,
+    s.hali,
+    s.vali,
+    s.importdatum,
+    s.nachfuehrung,
+    s.lage,
+    s.pos
 FROM
-    av_avdpool_ng.bodenbedeckung_objektnamepos AS p 
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_objektname AS o 
-    ON p.objektnamepos_von = o.tid
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_boflaeche AS bb
-    ON o.objektname_von = bb.tid
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_bbnachfuehrung AS nf
-    ON bb.entstehung = nf.tid
-    
-UNION ALL
-
-SELECT 
-    o."name" AS objektname,
-    CASE
-        WHEN p.ori IS NULL THEN 0
-        ELSE (100 - p.ori) * 0.9 
-    END AS orientierung,
-    CASE 
-        WHEN p.hali_txt IS NULL THEN 'Center'
-        ELSE p.hali_txt
-    END AS hali,
-    CASE 
-        WHEN p.vali_txt IS NULL THEN 'Half'
-        ELSE p.vali_txt
-    END AS vali,
-    bb.art,
-    CASE 
-        WHEN split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))='fliessendes' THEN 'fliessendes Gewaesser'
-        WHEN split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))='stehendes' THEN 'stehendes Gewaesser'
-        ELSE split_part(bb.art_txt,'.', array_upper(string_to_array(bb.art_txt, '.'), 1))
-    END AS art_txt,
-    'BB' AS herkunft,
-    p.gem_bfs AS bfs_nr,
-    p.lieferdatum AS importdatum,
-    to_date(nf.gueltigereintrag, 'YYYYMMDD') AS nachfuehrung,
-    'projektiert' AS status,
-    p.pos 
-FROM
-    av_avdpool_ng.bodenbedeckung_projobjektnamepos AS p 
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_projobjektname AS o 
-    ON p.projobjektnamepos_von = o.tid
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_projboflaeche AS bb
-    ON o.projobjektname_von = bb.tid
-    LEFT JOIN av_avdpool_ng.bodenbedeckung_bbnachfuehrung AS nf
-    ON bb.entstehung = nf.tid
-
-UNION ALL
- 
-SELECT
-    eopos.objektname,
-    eopos.orientierung,
-    eopos.hali,
-    eopos.vali,
-    eof.art,
-    eof.art_txt,
-    'EO_Flaeche' AS herkunft,
-    eopos.bfs_nr,
-    eopos.importdatum,
-    eof.nachfuehrung,
-    'realisiert' AS status,
-    eopos.pos 
-FROM
-    eof
-    INNER JOIN eopos
-    ON eof.tid = eopos.objektname_von
-   
-UNION ALL
-  
-SELECT
-    eopos.objektname,
-    eopos.orientierung,
-    eopos.hali,
-    eopos.vali,
-    eol.art,
-    eol.art_txt,
-    'EO_Linie' AS herkunft,
-    eopos.bfs_nr,
-    eopos.importdatum,
-    eol.nachfuehrung,
-    'realisiert' AS status,
-    eopos.pos 
-FROM
-    eol
-    INNER JOIN eopos
-    ON eol.tid = eopos.objektname_von
-
-UNION ALL
-
-SELECT
-    eopos.objektname,
-    eopos.orientierung,
-    eopos.hali,
-    eopos.vali,
-    eop.art,
-    eop.art_txt,
-    'EO_Punkt' AS herkunft,
-    eopos.bfs_nr,
-    eopos.importdatum,
-    eop.nachfuehrung,
-    'realisiert' AS status,
-    eopos.pos 
-FROM
-    eop
-    INNER JOIN eopos
-    ON eop.tid = eopos.objektname_von;
+    gebaeudeeingang_strassenname AS s;
