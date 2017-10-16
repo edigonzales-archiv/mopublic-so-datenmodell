@@ -1,4 +1,7 @@
 description = """\n
+* gebaeudeadressen: Import des PLZ/Ortschafts-Datensatz (von swisstopo) noch nicht
+geklärt und in sogis-db veraltete Daten. Zuwarten mit Verschnitt bis geklärt. 
+
 """
 
 ext {
@@ -25,7 +28,9 @@ task transformMOpublic(type: Db2DbTask) {
             //new TransferSet("transform_av_mopublic_gelaendename.sql", 'av_mopublic.mopublic_gelaendename', true)
             //new TransferSet("transform_av_mopublic_gemeindegrenze.sql", 'av_mopublic.mopublic_gemeindegrenze', true)
             //new TransferSet("transform_av_mopublic_gemeindegrenze_proj.sql", 'av_mopublic.mopublic_gemeindegrenze_proj', true)
-            new TransferSet("transform_av_mopublic_grenzpunkt.sql", 'av_mopublic.mopublic_grenzpunkt', true)
+            //new TransferSet("transform_av_mopublic_grenzpunkt.sql", 'av_mopublic.mopublic_grenzpunkt', true)
+            //new TransferSet("transform_av_mopublic_fixpunkt.sql", 'av_mopublic.mopublic_fixpunkt', true)
+            new TransferSet("transform_av_mopublic_hoheitsgrenzpunkt.sql", 'av_mopublic.mopublic_hoheitsgrenzpunkt', true)
 
             //new TransferSet("transform_av_mopublic_grundstueck.sql", 'av_mopublic.mopublic_grundstueck', true),
             //new TransferSet("transform_av_mopublic_grundstueck_proj.sql", 'av_mopublic.mopublic_grundstueck_proj', true),
