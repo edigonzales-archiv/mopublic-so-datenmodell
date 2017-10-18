@@ -8,7 +8,7 @@ SELECT
     g.punktzeichen,
     g.punktzeichen_txt,
     CASE 
-        WHEN s.ori IS NULL THEN 100.0
+        WHEN s.ori IS NULL THEN (100 - 0) * 0.9
         ELSE (100 - s.ori) * 0.9
     END AS symbolorientierung,
     g.gem_bfs AS bfs_nr,

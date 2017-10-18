@@ -16,15 +16,15 @@ SELECT
         ELSE lfp.punktzeichen_txt
     END AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     lfp.lieferdatum AS importdatum,
@@ -58,15 +58,15 @@ SELECT
         ELSE lfp.punktzeichen_txt
     END AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     lfp.lieferdatum AS importdatum,
@@ -100,15 +100,15 @@ SELECT
         ELSE lfp.punktzeichen_txt
     END AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     lfp.lieferdatum AS importdatum,
@@ -136,15 +136,15 @@ SELECT
     7 AS punktzeichen,
     'weitere' AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     hfp.lieferdatum AS importdatum,
@@ -172,15 +172,15 @@ SELECT
     7 AS punktzeichen,
     'weitere' AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     hfp.lieferdatum AS importdatum,
@@ -208,15 +208,15 @@ SELECT
     7 AS punktzeichen,
     'weitere' AS punktzeichen_txt,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
-        WHEN pos.hali_txt IS NULL THEN 'Center'
+        WHEN pos.hali_txt IS NULL THEN 'Left'
         ELSE pos.hali_txt
     END AS hali,
     CASE 
-        WHEN pos.vali_txt IS NULL THEN 'Half'
+        WHEN pos.vali_txt IS NULL THEN 'Bottom'
         ELSE pos.vali_txt
     END AS vali,
     hfp.lieferdatum AS importdatum,

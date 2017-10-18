@@ -5,7 +5,7 @@ WITH pos AS
         DISTINCT ON (grundstueckpos_von)
         grundstueckpos_von,
         CASE 
-            WHEN ori IS NULL THEN 0
+            WHEN ori IS NULL THEN (100 - 100) * 0.9
             ELSE (100 - ori) * 0.9
         END AS orientierung,
         CASE 

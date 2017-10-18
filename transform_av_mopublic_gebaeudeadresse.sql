@@ -35,7 +35,7 @@ gebaeudeeingang AS (
         n."text" AS gebaeudename, -- always empty?
         g.gem_bfs AS bfs_nr,
         CASE
-            WHEN h.ori IS NULL THEN 0
+            WHEN h.ori IS NULL THEN (100 - 100) * 0.9
             ELSE (100 - h.ori) * 0.9 
         END AS orientierung,
         CASE 

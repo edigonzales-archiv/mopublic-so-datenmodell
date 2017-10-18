@@ -14,7 +14,7 @@ SELECT
     f."name" AS flurname,
     f.gem_bfs AS bfs_nr,
     CASE
-        WHEN pos.ori IS NULL THEN 0
+        WHEN pos.ori IS NULL THEN (100 - 100) * 0.9
         ELSE (100 - pos.ori) * 0.9 
     END AS orientierung,
     CASE 
