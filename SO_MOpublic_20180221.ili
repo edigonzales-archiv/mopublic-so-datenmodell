@@ -1,8 +1,22 @@
 INTERLIS 2.3;
 
-MODEL SO_MOpublic_20171003 (de)
+/** !!------------------------------------------------------------------------------ 
+ * !! Version    | wer | Änderung 
+ * !!------------------------------------------------------------------------------ 
+ * !! 2017-10-03 | sz  | Erstfassung
+ * !! 2017-10-10 | sz  | Anpassung nach Review ns
+ * !! 2017-10-12 | sz  | Grundstueck(_Proj).Art_txt -> 40 Zeichen
+ * !!            | sz  | XMLTime -> XMLDate
+ * !!            | sz  | Einzelobjekte_Punkt -> Einzelobjekt_Punkt
+ * !!            | sz  | VAlignmet -> VAli
+ * !! 2018-02-21 | sz  | Range für verschiedene Aufzähltypen korrigiert.
+ * !!            | sz  | Range für Orientierung korrigiert.
+ * !!==============================================================================
+ */
+!!@ technicalContact=agi@bd.so.ch
+MODEL SO_MOpublic_20180221 (de)
 AT "http://www.geo.so.ch/models/AGI"
-VERSION "2017-10-03"  =
+VERSION "2018-02-21"  =
   IMPORTS GeometryCHLV95_V1,Units,CHAdminCodes_V1;
 
   TOPIC MOpublic =
@@ -16,7 +30,7 @@ VERSION "2017-10-03"  =
 
       /** In Grad. Einheit, Drehsinn und Nullpunkt an GDI-Software angepasst.
        */
-      Orientierung = -180.00 .. 180.00 [Units.Angle_Degree];
+      Orientierung = -270.00 .. 90.00 [Units.Angle_Degree];
 
     CLASS Bodenbedeckung =
       /** Bodenbedeckungsart (Integer-Repräsentation)
@@ -402,7 +416,7 @@ VERSION "2017-10-03"  =
       Punktzeichen_txt : MANDATORY TEXT*20;
       /** Symbolorientierung
        */
-      Symbolorientierung : GeometryCHLV95_V1.Orientation;
+      Symbolorientierung : Orientierung;
       /** Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
        */
       BFS_Nr : MANDATORY CHAdminCodes_V1.CHMunicipalityCode;
@@ -567,7 +581,7 @@ VERSION "2017-10-03"  =
       VAli : MANDATORY INTERLIS.VALIGNMENT;
       /** Art des Objektnamens, aus Art BB/EO. (Integer-Repräsentation)
        */
-      Art : MANDATORY 0 .. 41;
+      Art : MANDATORY 0 .. 45;
       /** Art des Objektnamens, aus Art BB/EO. (Text-Repräsentation)
        */
       Art_txt : MANDATORY TEXT*100;
@@ -652,4 +666,4 @@ VERSION "2017-10-03"  =
 
   END MOpublic;
 
-END SO_MOpublic_20171003.
+END SO_MOpublic_20180221.

@@ -1,5 +1,5 @@
 CREATE SEQUENCE av_mopublic.t_ili2db_seq;;
--- SO_MOpublic_20171003.MOpublic.Bodenbedeckung
+-- SO_MOpublic_20180221.MOpublic.Bodenbedeckung
 CREATE TABLE av_mopublic.mopublic_bodenbedeckung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -13,7 +13,7 @@ CREATE TABLE av_mopublic.mopublic_bodenbedeckung (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_bodenbedeckung','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
 CREATE INDEX mopublic_bodenbedeckung_geometrie_idx ON av_mopublic.mopublic_bodenbedeckung USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_bodenbedeckung IS '@iliname SO_MOpublic_20171003.MOpublic.Bodenbedeckung';
+COMMENT ON TABLE av_mopublic.mopublic_bodenbedeckung IS '@iliname SO_MOpublic_20180221.MOpublic.Bodenbedeckung';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung.art IS 'Bodenbedeckungsart (Integer-ReprÃ¤sentation)
 @iliname Art';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung.art_txt IS 'Bodenbedeckungsart (Text-ReprÃ¤sentation)
@@ -28,7 +28,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung.nachfuehrung IS 'Datum der
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung.geometrie IS 'Geometrie
 @iliname Geometrie';
--- SO_MOpublic_20171003.MOpublic.Bodenbedeckung_proj
+-- SO_MOpublic_20180221.MOpublic.Bodenbedeckung_proj
 CREATE TABLE av_mopublic.mopublic_bodenbedeckung_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -42,7 +42,7 @@ CREATE TABLE av_mopublic.mopublic_bodenbedeckung_proj (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_bodenbedeckung_proj','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
 CREATE INDEX mopublic_bodenbedckng_proj_geometrie_idx ON av_mopublic.mopublic_bodenbedeckung_proj USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_bodenbedeckung_proj IS '@iliname SO_MOpublic_20171003.MOpublic.Bodenbedeckung_proj';
+COMMENT ON TABLE av_mopublic.mopublic_bodenbedeckung_proj IS '@iliname SO_MOpublic_20180221.MOpublic.Bodenbedeckung_proj';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung_proj.art IS 'Bodenbedeckungsart (Integer-ReprÃ¤sentation)
 @iliname Art';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung_proj.art_txt IS 'Bodenbedeckungsart (Text-ReprÃ¤sentation)
@@ -57,7 +57,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung_proj.nachfuehrung IS 'Datu
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_bodenbedeckung_proj.geometrie IS 'Geometrie
 @iliname Geometrie';
--- SO_MOpublic_20171003.MOpublic.Einzelobjekt_Flaeche
+-- SO_MOpublic_20180221.MOpublic.Einzelobjekt_Flaeche
 CREATE TABLE av_mopublic.mopublic_einzelobjekt_flaeche (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -71,7 +71,7 @@ CREATE TABLE av_mopublic.mopublic_einzelobjekt_flaeche (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_einzelobjekt_flaeche','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
 CREATE INDEX mopublic_einzelobjkt_flche_geometrie_idx ON av_mopublic.mopublic_einzelobjekt_flaeche USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_flaeche IS '@iliname SO_MOpublic_20171003.MOpublic.Einzelobjekt_Flaeche';
+COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_flaeche IS '@iliname SO_MOpublic_20180221.MOpublic.Einzelobjekt_Flaeche';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_flaeche.art IS 'Einzelobjektart (Integer-ReprÃ¤sentation)
 @iliname Art';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_flaeche.art_txt IS 'Einzelobjektart (Text-ReprÃ¤sentation)
@@ -86,7 +86,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_flaeche.nachfuehrung IS 'Dat
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_flaeche.geometrie IS 'Geometrie
 @iliname Geometrie';
--- SO_MOpublic_20171003.MOpublic.Einzelobjekt_Linie
+-- SO_MOpublic_20180221.MOpublic.Einzelobjekt_Linie
 CREATE TABLE av_mopublic.mopublic_einzelobjekt_linie (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -99,7 +99,7 @@ CREATE TABLE av_mopublic.mopublic_einzelobjekt_linie (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_einzelobjekt_linie','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'LINESTRING',2);
 CREATE INDEX mopublic_einzelobjekt_lnie_geometrie_idx ON av_mopublic.mopublic_einzelobjekt_linie USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_linie IS '@iliname SO_MOpublic_20171003.MOpublic.Einzelobjekt_Linie';
+COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_linie IS '@iliname SO_MOpublic_20180221.MOpublic.Einzelobjekt_Linie';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_linie.art IS 'Einzelobjektart (Integer-ReprÃ¤sentation)
 @iliname Art';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_linie.art_txt IS 'Einzelobjektart (Text-ReprÃ¤sentation)
@@ -112,7 +112,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_linie.nachfuehrung IS 'Datum
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_linie.geometrie IS 'Geometrie
 @iliname Geometrie';
--- SO_MOpublic_20171003.MOpublic.Gemeindegrenze
+-- SO_MOpublic_20180221.MOpublic.Gemeindegrenze
 CREATE TABLE av_mopublic.mopublic_gemeindegrenze (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -124,7 +124,7 @@ CREATE TABLE av_mopublic.mopublic_gemeindegrenze (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_gemeindegrenze','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POLYGON',2);
 CREATE INDEX mopublic_gemeindegrenze_geometrie_idx ON av_mopublic.mopublic_gemeindegrenze USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_gemeindegrenze IS '@iliname SO_MOpublic_20171003.MOpublic.Gemeindegrenze';
+COMMENT ON TABLE av_mopublic.mopublic_gemeindegrenze IS '@iliname SO_MOpublic_20180221.MOpublic.Gemeindegrenze';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze.gemeindename IS 'Name der Gemeinde
 @iliname Gemeindename';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze.geometrie IS 'Geometrie
@@ -135,7 +135,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze.importdatum IS 'Importdatu
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Gemeindegrenze_proj
+-- SO_MOpublic_20180221.MOpublic.Gemeindegrenze_proj
 CREATE TABLE av_mopublic.mopublic_gemeindegrenze_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -147,7 +147,7 @@ CREATE TABLE av_mopublic.mopublic_gemeindegrenze_proj (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_gemeindegrenze_proj','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'LINESTRING',2);
 CREATE INDEX mopublic_gemeindegrnz_proj_geometrie_idx ON av_mopublic.mopublic_gemeindegrenze_proj USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_gemeindegrenze_proj IS '@iliname SO_MOpublic_20171003.MOpublic.Gemeindegrenze_proj';
+COMMENT ON TABLE av_mopublic.mopublic_gemeindegrenze_proj IS '@iliname SO_MOpublic_20180221.MOpublic.Gemeindegrenze_proj';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze_proj.gemeindename IS 'Name der Gemeinde
 @iliname Gemeindename';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze_proj.geometrie IS 'Geometrie
@@ -158,7 +158,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze_proj.importdatum IS 'Impor
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_gemeindegrenze_proj.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Rohrleitung
+-- SO_MOpublic_20180221.MOpublic.Rohrleitung
 CREATE TABLE av_mopublic.mopublic_rohrleitung (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -172,7 +172,7 @@ CREATE TABLE av_mopublic.mopublic_rohrleitung (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_rohrleitung','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'LINESTRING',2);
 CREATE INDEX mopublic_rohrleitung_geometrie_idx ON av_mopublic.mopublic_rohrleitung USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_rohrleitung IS '@iliname SO_MOpublic_20171003.MOpublic.Rohrleitung';
+COMMENT ON TABLE av_mopublic.mopublic_rohrleitung IS '@iliname SO_MOpublic_20180221.MOpublic.Rohrleitung';
 COMMENT ON COLUMN av_mopublic.mopublic_rohrleitung.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_rohrleitung.art IS 'Transportmedium (Integer-ReprÃ¤sentation)
@@ -187,7 +187,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_rohrleitung.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_rohrleitung.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Strassenachse
+-- SO_MOpublic_20180221.MOpublic.Strassenachse
 CREATE TABLE av_mopublic.mopublic_strassenachse (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -200,7 +200,7 @@ CREATE TABLE av_mopublic.mopublic_strassenachse (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_strassenachse','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'LINESTRING',2);
 CREATE INDEX mopublic_strassenachse_geometrie_idx ON av_mopublic.mopublic_strassenachse USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_strassenachse IS '@iliname SO_MOpublic_20171003.MOpublic.Strassenachse';
+COMMENT ON TABLE av_mopublic.mopublic_strassenachse IS '@iliname SO_MOpublic_20180221.MOpublic.Strassenachse';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.strassenname IS 'Strassenname
@@ -213,7 +213,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenachse.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Einzelobjekt_Punkt
+-- SO_MOpublic_20180221.MOpublic.Einzelobjekt_Punkt
 CREATE TABLE av_mopublic.mopublic_einzelobjekt_punkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -227,7 +227,7 @@ CREATE TABLE av_mopublic.mopublic_einzelobjekt_punkt (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_einzelobjekt_punkt','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_einzelobjekt_pnkt_geometrie_idx ON av_mopublic.mopublic_einzelobjekt_punkt USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_punkt IS '@iliname SO_MOpublic_20171003.MOpublic.Einzelobjekt_Punkt';
+COMMENT ON TABLE av_mopublic.mopublic_einzelobjekt_punkt IS '@iliname SO_MOpublic_20180221.MOpublic.Einzelobjekt_Punkt';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.art IS 'Einzelobjektart (Integer-ReprÃ¤sentation)
 @iliname Art';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.art_txt IS 'Einzelobjektart (Text-ReprÃ¤sentation)
@@ -242,7 +242,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.nachfuehrung IS 'Datum
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_einzelobjekt_punkt.geometrie IS 'Geometrie
 @iliname Geometrie';
--- SO_MOpublic_20171003.MOpublic.Fixpunkt
+-- SO_MOpublic_20180221.MOpublic.Fixpunkt
 CREATE TABLE av_mopublic.mopublic_fixpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -267,7 +267,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_fixpunkt','geometrie',(SELECT s
 SELECT AddGeometryColumn('av_mopublic','mopublic_fixpunkt','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_fixpunkt_geometrie_idx ON av_mopublic.mopublic_fixpunkt USING GIST ( geometrie );
 CREATE INDEX mopublic_fixpunkt_pos_idx ON av_mopublic.mopublic_fixpunkt USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_fixpunkt IS '@iliname SO_MOpublic_20171003.MOpublic.Fixpunkt';
+COMMENT ON TABLE av_mopublic.mopublic_fixpunkt IS '@iliname SO_MOpublic_20180221.MOpublic.Fixpunkt';
 COMMENT ON COLUMN av_mopublic.mopublic_fixpunkt.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_fixpunkt.typ IS 'Fixpunkttyp (Integer-ReprÃ¤sentation)
@@ -302,7 +302,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_fixpunkt.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_fixpunkt.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Flurname
+-- SO_MOpublic_20180221.MOpublic.Flurname
 CREATE TABLE av_mopublic.mopublic_flurname (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -319,7 +319,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_flurname','geometrie',(SELECT s
 SELECT AddGeometryColumn('av_mopublic','mopublic_flurname','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_flurname_geometrie_idx ON av_mopublic.mopublic_flurname USING GIST ( geometrie );
 CREATE INDEX mopublic_flurname_pos_idx ON av_mopublic.mopublic_flurname USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_flurname IS '@iliname SO_MOpublic_20171003.MOpublic.Flurname';
+COMMENT ON TABLE av_mopublic.mopublic_flurname IS '@iliname SO_MOpublic_20180221.MOpublic.Flurname';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.flurname IS 'Flurname
 @iliname Flurname';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.geometrie IS 'Geometrie
@@ -338,7 +338,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_flurname.nachfuehrung IS 'Datum der Nachf
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_flurname.orientierung IS 'Textorientierung
 @iliname Orientierung';
--- SO_MOpublic_20171003.MOpublic.Gebaeudeadresse
+-- SO_MOpublic_20180221.MOpublic.Gebaeudeadresse
 CREATE TABLE av_mopublic.mopublic_gebaeudeadresse (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -364,7 +364,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_gebaeudeadresse','lage',(SELECT
 SELECT AddGeometryColumn('av_mopublic','mopublic_gebaeudeadresse','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_gebaeudeadresse_lage_idx ON av_mopublic.mopublic_gebaeudeadresse USING GIST ( lage );
 CREATE INDEX mopublic_gebaeudeadresse_pos_idx ON av_mopublic.mopublic_gebaeudeadresse USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_gebaeudeadresse IS '@iliname SO_MOpublic_20171003.MOpublic.Gebaeudeadresse';
+COMMENT ON TABLE av_mopublic.mopublic_gebaeudeadresse IS '@iliname SO_MOpublic_20180221.MOpublic.Gebaeudeadresse';
 COMMENT ON COLUMN av_mopublic.mopublic_gebaeudeadresse.lage IS 'Lage des GebÃ¤udeeingangs
 @iliname Lage';
 COMMENT ON COLUMN av_mopublic.mopublic_gebaeudeadresse.strassenname IS 'Name der Strasse
@@ -400,7 +400,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_gebaeudeadresse.importdatum IS 'Importdat
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_gebaeudeadresse.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Gelaendename
+-- SO_MOpublic_20180221.MOpublic.Gelaendename
 CREATE TABLE av_mopublic.mopublic_gelaendename (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -415,7 +415,7 @@ CREATE TABLE av_mopublic.mopublic_gelaendename (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_gelaendename','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_gelaendename_pos_idx ON av_mopublic.mopublic_gelaendename USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_gelaendename IS '@iliname SO_MOpublic_20171003.MOpublic.Gelaendename';
+COMMENT ON TABLE av_mopublic.mopublic_gelaendename IS '@iliname SO_MOpublic_20180221.MOpublic.Gelaendename';
 COMMENT ON COLUMN av_mopublic.mopublic_gelaendename.gelaendename IS 'GelÃ¤ndename
 @iliname Gelaendename';
 COMMENT ON COLUMN av_mopublic.mopublic_gelaendename.bfs_nr IS 'Gemeindenummer (BfS-Nummer) der Gemeinde in welcher das Objekt liegt.
@@ -432,7 +432,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_gelaendename.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_gelaendename.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Grenzpunkt
+-- SO_MOpublic_20180221.MOpublic.Grenzpunkt
 CREATE TABLE av_mopublic.mopublic_grenzpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -440,7 +440,7 @@ CREATE TABLE av_mopublic.mopublic_grenzpunkt (
   ,lagezuverlaessigkeit boolean NOT NULL
   ,punktzeichen integer NOT NULL
   ,punktzeichen_txt varchar(20) NOT NULL
-  ,symbolorientierung decimal(8,5) NULL
+  ,symbolorientierung decimal(5,2) NULL
   ,bfs_nr integer NOT NULL
   ,importdatum timestamp NOT NULL
   ,nachfuehrung date NULL
@@ -448,7 +448,7 @@ CREATE TABLE av_mopublic.mopublic_grenzpunkt (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_grenzpunkt','geometrie',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_grenzpunkt_geometrie_idx ON av_mopublic.mopublic_grenzpunkt USING GIST ( geometrie );
-COMMENT ON TABLE av_mopublic.mopublic_grenzpunkt IS '@iliname SO_MOpublic_20171003.MOpublic.Grenzpunkt';
+COMMENT ON TABLE av_mopublic.mopublic_grenzpunkt IS '@iliname SO_MOpublic_20180221.MOpublic.Grenzpunkt';
 COMMENT ON COLUMN av_mopublic.mopublic_grenzpunkt.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_grenzpunkt.lagegenauigkeit IS 'Lagegenauigkeit
@@ -467,7 +467,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_grenzpunkt.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_grenzpunkt.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Grundstueck
+-- SO_MOpublic_20180221.MOpublic.Grundstueck
 CREATE TABLE av_mopublic.mopublic_grundstueck (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -489,7 +489,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_grundstueck','geometrie',(SELEC
 SELECT AddGeometryColumn('av_mopublic','mopublic_grundstueck','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_grundstueck_geometrie_idx ON av_mopublic.mopublic_grundstueck USING GIST ( geometrie );
 CREATE INDEX mopublic_grundstueck_pos_idx ON av_mopublic.mopublic_grundstueck USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_grundstueck IS '@iliname SO_MOpublic_20171003.MOpublic.Grundstueck';
+COMMENT ON TABLE av_mopublic.mopublic_grundstueck IS '@iliname SO_MOpublic_20180221.MOpublic.Grundstueck';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck.nbident IS 'Nummerierungsbereichidentifikator
@@ -518,7 +518,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_grundstueck.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Grundstueck_proj
+-- SO_MOpublic_20180221.MOpublic.Grundstueck_proj
 CREATE TABLE av_mopublic.mopublic_grundstueck_proj (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -540,7 +540,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_grundstueck_proj','geometrie',(
 SELECT AddGeometryColumn('av_mopublic','mopublic_grundstueck_proj','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_grundstueck_proj_geometrie_idx ON av_mopublic.mopublic_grundstueck_proj USING GIST ( geometrie );
 CREATE INDEX mopublic_grundstueck_proj_pos_idx ON av_mopublic.mopublic_grundstueck_proj USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_grundstueck_proj IS '@iliname SO_MOpublic_20171003.MOpublic.Grundstueck_proj';
+COMMENT ON TABLE av_mopublic.mopublic_grundstueck_proj IS '@iliname SO_MOpublic_20180221.MOpublic.Grundstueck_proj';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck_proj.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck_proj.nbident IS 'Nummerierungsbereichidentifikator
@@ -569,7 +569,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_grundstueck_proj.importdatum IS 'Importda
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_grundstueck_proj.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Hoheitsgrenzpunkt
+-- SO_MOpublic_20180221.MOpublic.Hoheitsgrenzpunkt
 CREATE TABLE av_mopublic.mopublic_hoheitsgrenzpunkt (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -591,7 +591,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_hoheitsgrenzpunkt','geometrie',
 SELECT AddGeometryColumn('av_mopublic','mopublic_hoheitsgrenzpunkt','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_hoheitsgrenzpunkt_geometrie_idx ON av_mopublic.mopublic_hoheitsgrenzpunkt USING GIST ( geometrie );
 CREATE INDEX mopublic_hoheitsgrenzpunkt_pos_idx ON av_mopublic.mopublic_hoheitsgrenzpunkt USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_hoheitsgrenzpunkt IS '@iliname SO_MOpublic_20171003.MOpublic.Hoheitsgrenzpunkt';
+COMMENT ON TABLE av_mopublic.mopublic_hoheitsgrenzpunkt IS '@iliname SO_MOpublic_20180221.MOpublic.Hoheitsgrenzpunkt';
 COMMENT ON COLUMN av_mopublic.mopublic_hoheitsgrenzpunkt.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_hoheitsgrenzpunkt.nummer IS 'Nummer des Hoheitsgrenzpunktes
@@ -620,7 +620,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_hoheitsgrenzpunkt.nachfuehrung IS 'Datum 
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_hoheitsgrenzpunkt.pos IS 'Positionierungspunkt fÃ¼r Beschriftung
 @iliname Pos';
--- SO_MOpublic_20171003.MOpublic.Objektname_Pos
+-- SO_MOpublic_20180221.MOpublic.Objektname_Pos
 CREATE TABLE av_mopublic.mopublic_objektname_pos (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -639,7 +639,7 @@ CREATE TABLE av_mopublic.mopublic_objektname_pos (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_objektname_pos','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_objektname_pos_pos_idx ON av_mopublic.mopublic_objektname_pos USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_objektname_pos IS '@iliname SO_MOpublic_20171003.MOpublic.Objektname_Pos';
+COMMENT ON TABLE av_mopublic.mopublic_objektname_pos IS '@iliname SO_MOpublic_20180221.MOpublic.Objektname_Pos';
 COMMENT ON COLUMN av_mopublic.mopublic_objektname_pos.objektname IS 'Name des Objektes
 @iliname Objektname';
 COMMENT ON COLUMN av_mopublic.mopublic_objektname_pos.pos IS 'Position
@@ -664,7 +664,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_objektname_pos.nachfuehrung IS 'Datum der
 @iliname Nachfuehrung';
 COMMENT ON COLUMN av_mopublic.mopublic_objektname_pos.status IS 'Status der Geometrie: projektiert/realisiert
 @iliname Status';
--- SO_MOpublic_20171003.MOpublic.Ortsname
+-- SO_MOpublic_20180221.MOpublic.Ortsname
 CREATE TABLE av_mopublic.mopublic_ortsname (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -681,7 +681,7 @@ SELECT AddGeometryColumn('av_mopublic','mopublic_ortsname','geometrie',(SELECT s
 SELECT AddGeometryColumn('av_mopublic','mopublic_ortsname','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_ortsname_geometrie_idx ON av_mopublic.mopublic_ortsname USING GIST ( geometrie );
 CREATE INDEX mopublic_ortsname_pos_idx ON av_mopublic.mopublic_ortsname USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_ortsname IS '@iliname SO_MOpublic_20171003.MOpublic.Ortsname';
+COMMENT ON TABLE av_mopublic.mopublic_ortsname IS '@iliname SO_MOpublic_20180221.MOpublic.Ortsname';
 COMMENT ON COLUMN av_mopublic.mopublic_ortsname.geometrie IS 'Geometrie
 @iliname Geometrie';
 COMMENT ON COLUMN av_mopublic.mopublic_ortsname.ortsname IS 'Ortsname
@@ -700,7 +700,7 @@ COMMENT ON COLUMN av_mopublic.mopublic_ortsname.importdatum IS 'Importdatum
 @iliname Importdatum';
 COMMENT ON COLUMN av_mopublic.mopublic_ortsname.nachfuehrung IS 'Datum der NachfÃ¼hrung durch Geometer
 @iliname Nachfuehrung';
--- SO_MOpublic_20171003.MOpublic.Strassenname_Pos
+-- SO_MOpublic_20180221.MOpublic.Strassenname_Pos
 CREATE TABLE av_mopublic.mopublic_strassenname_pos (
   T_Id bigint PRIMARY KEY DEFAULT nextval('av_mopublic.t_ili2db_seq')
   ,T_Ili_Tid uuid NULL DEFAULT uuid_generate_v4()
@@ -715,7 +715,7 @@ CREATE TABLE av_mopublic.mopublic_strassenname_pos (
 ;
 SELECT AddGeometryColumn('av_mopublic','mopublic_strassenname_pos','pos',(SELECT srid FROM SPATIAL_REF_SYS WHERE AUTH_NAME='EPSG' AND AUTH_SRID=2056),'POINT',2);
 CREATE INDEX mopublic_strassenname_pos_pos_idx ON av_mopublic.mopublic_strassenname_pos USING GIST ( pos );
-COMMENT ON TABLE av_mopublic.mopublic_strassenname_pos IS '@iliname SO_MOpublic_20171003.MOpublic.Strassenname_Pos';
+COMMENT ON TABLE av_mopublic.mopublic_strassenname_pos IS '@iliname SO_MOpublic_20180221.MOpublic.Strassenname_Pos';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenname_pos.strassenname IS 'Strassenname
 @iliname Strassenname';
 COMMENT ON COLUMN av_mopublic.mopublic_strassenname_pos.pos IS 'Positionierungspunkt fÃ¼r Beschriftung
@@ -803,7 +803,7 @@ CREATE TABLE av_mopublic.T_ILI2DB_MODEL (
   ,PRIMARY KEY (modelName,iliversion)
 )
 ;
-CREATE TABLE av_mopublic.halignment (
+CREATE TABLE av_mopublic.mopublic_objektname_pos_herkunft (
   itfCode integer PRIMARY KEY
   ,iliCode varchar(1024) NOT NULL
   ,seq integer NULL
@@ -819,7 +819,7 @@ CREATE TABLE av_mopublic.valignment (
   ,dispName varchar(250) NOT NULL
 )
 ;
-CREATE TABLE av_mopublic.mopublic_objektname_pos_herkunft (
+CREATE TABLE av_mopublic.halignment (
   itfCode integer PRIMARY KEY
   ,iliCode varchar(1024) NOT NULL
   ,seq integer NULL
@@ -854,6 +854,66 @@ CREATE TABLE av_mopublic.T_ILI2DB_TABLE_PROP (
   ,setting varchar(1024) NOT NULL
 )
 ;
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung ADD CONSTRAINT mopublic_bodenbedeckung_art_check CHECK( art BETWEEN 0 AND 40);
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung ADD CONSTRAINT mopublic_bodenbedeckung_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung ADD CONSTRAINT mopublic_bodenbedeckung_egid_check CHECK( egid BETWEEN 0 AND 999999999);
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung_proj ADD CONSTRAINT mopublic_bodenbdckng_proj_art_check CHECK( art BETWEEN 0 AND 40);
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung_proj ADD CONSTRAINT mopublic_bodenbdckng_proj_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_bodenbedeckung_proj ADD CONSTRAINT mopublic_bodenbdckng_proj_egid_check CHECK( egid BETWEEN 0 AND 999999999);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_flaeche ADD CONSTRAINT mopublic_einzelbjkt_flche_art_check CHECK( art BETWEEN 0 AND 45);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_flaeche ADD CONSTRAINT mopublic_einzelbjkt_flche_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_flaeche ADD CONSTRAINT mopublic_einzelbjkt_flche_egid_check CHECK( egid BETWEEN 0 AND 999999999);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_linie ADD CONSTRAINT mopublic_einzelobjkt_lnie_art_check CHECK( art BETWEEN 0 AND 45);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_linie ADD CONSTRAINT mopublic_einzelobjkt_lnie_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_gemeindegrenze ADD CONSTRAINT mopublic_gemeindegrenze_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_gemeindegrenze_proj ADD CONSTRAINT mopublic_gemeindgrnz_proj_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_rohrleitung ADD CONSTRAINT mopublic_rohrleitung_art_check CHECK( art BETWEEN 0 AND 2);
+ALTER TABLE av_mopublic.mopublic_rohrleitung ADD CONSTRAINT mopublic_rohrleitung_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_strassenachse ADD CONSTRAINT mopublic_strassenachse_ordnung_check CHECK( ordnung BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_strassenachse ADD CONSTRAINT mopublic_strassenachse_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_punkt ADD CONSTRAINT mopublic_einzelobjkt_pnkt_art_check CHECK( art BETWEEN 0 AND 45);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_punkt ADD CONSTRAINT mopublic_einzelobjkt_pnkt_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_einzelobjekt_punkt ADD CONSTRAINT mopublic_einzelobjkt_pnkt_symbolorientierung_check CHECK( symbolorientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_typ_check CHECK( typ BETWEEN 0 AND 5);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_hoehe_check CHECK( hoehe BETWEEN -200.0 AND 1600.0);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_lagegenauigkeit_check CHECK( lagegenauigkeit BETWEEN 0.0 AND 700.0);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_hoehengenauigkeit_check CHECK( hoehengenauigkeit BETWEEN 0.0 AND 700.0);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_punktzeichen_check CHECK( punktzeichen BETWEEN 0 AND 8);
+ALTER TABLE av_mopublic.mopublic_fixpunkt ADD CONSTRAINT mopublic_fixpunkt_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_flurname ADD CONSTRAINT mopublic_flurname_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_flurname ADD CONSTRAINT mopublic_flurname_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_egid_check CHECK( egid BETWEEN 0 AND 999999999);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_edid_check CHECK( edid BETWEEN 0 AND 99);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_plz_check CHECK( plz BETWEEN 0 AND 9999);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_hoehenlage_check CHECK( hoehenlage BETWEEN -99 AND 99);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_gebaeudeadresse ADD CONSTRAINT mopublic_gebaeudeadresse_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_gelaendename ADD CONSTRAINT mopublic_gelaendename_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_gelaendename ADD CONSTRAINT mopublic_gelaendename_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_grenzpunkt ADD CONSTRAINT mopublic_grenzpunkt_lagegenauigkeit_check CHECK( lagegenauigkeit BETWEEN 0.0 AND 700.0);
+ALTER TABLE av_mopublic.mopublic_grenzpunkt ADD CONSTRAINT mopublic_grenzpunkt_punktzeichen_check CHECK( punktzeichen BETWEEN 0 AND 7);
+ALTER TABLE av_mopublic.mopublic_grenzpunkt ADD CONSTRAINT mopublic_grenzpunkt_symbolorientierung_check CHECK( symbolorientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_grenzpunkt ADD CONSTRAINT mopublic_grenzpunkt_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_grundstueck ADD CONSTRAINT mopublic_grundstueck_art_check CHECK( art BETWEEN 0 AND 2);
+ALTER TABLE av_mopublic.mopublic_grundstueck ADD CONSTRAINT mopublic_grundstueck_flaechenmass_check CHECK( flaechenmass BETWEEN 0 AND 2147483647);
+ALTER TABLE av_mopublic.mopublic_grundstueck ADD CONSTRAINT mopublic_grundstueck_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_grundstueck ADD CONSTRAINT mopublic_grundstueck_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_grundstueck_proj ADD CONSTRAINT mopublic_grundstueck_proj_art_check CHECK( art BETWEEN 0 AND 2);
+ALTER TABLE av_mopublic.mopublic_grundstueck_proj ADD CONSTRAINT mopublic_grundstueck_proj_flaechenmass_check CHECK( flaechenmass BETWEEN 0 AND 2147483647);
+ALTER TABLE av_mopublic.mopublic_grundstueck_proj ADD CONSTRAINT mopublic_grundstueck_proj_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_grundstueck_proj ADD CONSTRAINT mopublic_grundstueck_proj_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_hoheitsgrenzpunkt ADD CONSTRAINT mopublic_hoheitsgrenzpnkt_punktzeichen_check CHECK( punktzeichen BETWEEN 0 AND 7);
+ALTER TABLE av_mopublic.mopublic_hoheitsgrenzpunkt ADD CONSTRAINT mopublic_hoheitsgrenzpnkt_lagegenauigkeit_check CHECK( lagegenauigkeit BETWEEN 0.0 AND 700.0);
+ALTER TABLE av_mopublic.mopublic_hoheitsgrenzpunkt ADD CONSTRAINT mopublic_hoheitsgrenzpnkt_symbolorientierung_check CHECK( symbolorientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_hoheitsgrenzpunkt ADD CONSTRAINT mopublic_hoheitsgrenzpnkt_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_objektname_pos ADD CONSTRAINT mopublic_objektname_pos_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_objektname_pos ADD CONSTRAINT mopublic_objektname_pos_art_check CHECK( art BETWEEN 0 AND 45);
+ALTER TABLE av_mopublic.mopublic_objektname_pos ADD CONSTRAINT mopublic_objektname_pos_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_ortsname ADD CONSTRAINT mopublic_ortsname_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_ortsname ADD CONSTRAINT mopublic_ortsname_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
+ALTER TABLE av_mopublic.mopublic_strassenname_pos ADD CONSTRAINT mopublic_strassenname_pos_orientierung_check CHECK( orientierung BETWEEN -270.0 AND 90.0);
+ALTER TABLE av_mopublic.mopublic_strassenname_pos ADD CONSTRAINT mopublic_strassenname_pos_bfs_nr_check CHECK( bfs_nr BETWEEN 1 AND 9999);
 CREATE UNIQUE INDEX T_ILI2DB_DATASET_datasetName_key ON av_mopublic.T_ILI2DB_DATASET (datasetName)
 ;
 CREATE UNIQUE INDEX T_ILI2DB_MODEL_modelName_iliversion_key ON av_mopublic.T_ILI2DB_MODEL (modelName,iliversion)

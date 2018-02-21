@@ -17,5 +17,7 @@
 !!            | sz  | XMLTime -> XMLDate
 !!            | sz  | Einzelobjekte_Punkt -> Einzelobjekt_Punkt
 !!            | sz  | VAlignmet -> VAli
+!! 2018-02-21 | sz  | Range für verschieden Aufzähltypen korrigiert.
+!!            | sz  | Range für Orientierung korrigiert.
 !!============================================================================== 
 
